@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>north</title>
+<!-- jquery -->
+<!-- <script type="text/javascript" src="../jslib/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../jslib/jquery.cookie/jquery.cookie.js"></script> -->
+<!-- bootstrap -->
+<!-- <link href="../jslib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<script src="../jslib/bootstrap/js/bootstrap.min.js"></script> -->
+<!-- angularjs -->
+<!-- <script src="../jslib/angularjs/src/Angular.js"></script> -->
+<!-- <link rel="stylesheet" type="text/css" href="../style/north.css"> -->
+</head>
+<body>
+	<div id="content">
+		<div id="middle">
+			<!-- LOGO图片 -->
+			<img src="#" alt="Logo" class="img-rounded">
+			<!-- 导航栏 -->
+			<div class="collapse navbar-collapse" id="navigation" role="navigation">
+			    <ul class="nav navbar-nav">
+			    	<li tags="index"><a href="index.html">首页</a></li>
+			        <li tags="practice"><a href="practice.html">练习模式</a></li>
+			        <li tags="tank"><a href="tank.html">排行榜</a></li>
+			        <li tags="discuss"><a href="discuss.html">讨论区</a></li>
+			    </ul>
+			</div>
+			<!-- 搜索框 -->
+			<div id="searchbox">
+				<input type="text" class="form-control" id="search" placeholder="搜索...">
+
+				<div class="panel panel-primary" style="display: none;" id="s-box">
+					<table class="table">
+						<tbody>
+							<tr>
+								<td><small>题目:</small></td>
+							</tr>
+							<tr>
+								<td>123</td>
+							</tr>
+							<tr>
+								<td>123</td>
+							</tr>
+							<tr>
+								<td>123</td>
+							</tr>
+
+							<tr>
+								<td><small>用户:</small></td>
+							</tr>
+							<tr>
+								<td>123</td>
+							</tr>
+							<tr>
+								<td>123</td>
+							</tr>
+							<tr>
+								<td>123</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<button type="button" id="loginbtn" class="btn btn-default navbar-btn" data-toggle="modal" data-target="#login">登录</button>
+
+		</div>
+	</div>
+	<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">  
+		<div class="modal-dialog" role="document"><!-- 遮蔽层 -->
+		    <div class="modal-content"><!-- 中间的框 -->
+		        <div class="modal-header">  
+		            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		                <span aria-hidden="true">×</span>  
+		            </button>  
+		            <h4 class="modal-title" id="myModalLabel">登录</h4>  
+		        </div>	
+		        <div class="modal-body">  
+		            <form class="form-horizontal" novalidate>
+		            	<div class="form-group">
+							<label for="inputname" class="col-sm-2 control-label">邮箱\手机</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="inputname" placeholder="邮箱\手机" required>
+								<span class="glyphicon glyphicon-remove" id="nameError"></span>
+							</div>
+		            	</div>
+		            	<div class="form-group">
+		            	    <label for="inputPassword" class="col-sm-2 control-label">密码</label>
+		            	    <div class="col-sm-10">
+		            	    	<input type="password" class="form-control" id="inputPassword" placeholder="密码">
+	            	    	</div>
+		            	</div>
+		            	<div class="form-group">
+		            	    <div class="col-sm-offset-2 col-sm-10">
+		            	      <div class="checkbox">
+		            	        <label>
+		            	          	<input type="checkbox" onclick="rememberMe()">记住我的选择
+		            	        </label>
+		            	      </div>
+		            	    </div>
+		            	</div>
+		            	<div class="form-group">
+		            	    <div class="col-sm-offset-2 col-sm-10">
+		            	      <button type="submit" class="btn btn-default" onclick="ajaxsubmit()">登录</button>
+		            	    </div>
+		            	</div>
+		            	<div class="form-group">
+		            		<div class="col-sm-offset-2 col-sm-10" id="lastControls">
+		            			<label class="noName">没有账号？</label><a href="#" class="noName" ng-click="register()">注册</a>
+		            			<a href="#" class="forgetpsw">忘记密码?</a>
+		            		</div>
+		            	</div>
+		            </form>  
+		        </div>
+		        <div class="modal-footer">
+		            <div class="control-group">
+		            	<div class="controls">
+		            		<label id="loginfromOther">第三方账号登录：</label>
+		            	</div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+	</div>
+</body>
+<script>
+	var isRemember=false;
+	function check(mail){
+		var filtermail  = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+		var filterphone = /^1\d{10}$/;//11位 以1开头即可
+		if(filtermail.test(mail)||filterphone.test(mail)){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	function rememberMe(){
+		var val=$('input:checkbox:checked').val();
+		if(val=="on"){
+			if (confirm("请勿在公共电脑勾选此按钮")) {
+				$('input:checkbox').attr('checked',true);
+				isRemember=true;
+			}else{
+				$('input:checkbox').attr('checked',false);
+				isRemember=false;
+			}
+		}else{
+			isRemember=false;
+		}
+		//勾上将用户信息存入cookie
+	}
+	function ajaxsubmit(){
+		username=$("#inputname").val();
+		password=$("#inputPassword").val();
+		if(username.length==0){
+			alert("请填写用户名");
+			$("#inputname").focus();
+		}else{
+			$.ajax({
+				cache:true,
+				method:"POST",
+				url:"user/login",
+				data:{"username":username,"password":password},
+				success:function(data){
+					console.log(data)
+					 if(data.errorCode!=0){
+					 	alert("账号或密码有误")
+						$("#inputPassword").focus();
+						
+					}else{
+						var user = JSON.stringify(data.user)
+						if(isRemember==true){
+							$.cookie('user',user,{expires:7});//cookies存七天
+							location.reload();
+						}else{
+							$.cookie('user',user);			//cookies仅保存到浏览器关闭
+							location.reload();
+						}
+					}
+				},
+			})
+		}
+	}
+	function load(){
+		var a =$(document).attr("title");
+		switch(a){
+			case 'index':$("ul.nav li[tags='index']").addClass('active');break;
+			case 'practice':$("ul.nav li[tags='practice']").addClass('active');break;
+			case 'tank':$("ul.nav li[tags='tank']").addClass('active');break;
+			case 'discuss':$("ul.nav li[tags='discuss']").addClass('active');break;
+			default:break;
+		}
+	}
+	
+	$(document).ready(function(){
+		load();
+		$(document).bind('click', function(e) {
+			var e = e || window.event; //浏览器兼容性 
+			var elem = e.target || e.srcElement;
+			while (elem) { //循环判断至跟节点，防止点击的是div子元素 
+				if (elem.id && elem.id == 's-box') {
+					return;
+				}
+				elem = elem.parentNode;
+			}
+			$('#s-box').css('display', 'none'); //点击的不是div或其子元素 
+		});
+		$("#search").bind('input propertychange',function(){
+			$("#s-box").show();
+		});
+		$("#inputname").bind('blur',function(){
+			var mail=$("#inputname").val();
+			if(check(mail)){
+				$("#inputname").css("border-color","#ccc");
+				$("#nameError").hide();
+			}else{
+				$("#inputname").css("border-color","red");
+				$("#nameError").show();
+			}
+		})
+	})
+</script>
+</html>

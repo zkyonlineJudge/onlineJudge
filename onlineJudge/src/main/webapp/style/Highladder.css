@@ -1,0 +1,148 @@
+body #highladderMiddle {
+  max-width: 960px;
+  margin: 0 auto;
+  padding-top: 50px;
+}
+body #highladderMiddle .highladder {
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+body #highladderMiddle .highladder .highladderHeader {
+  border-bottom: 1px solid #ddd;
+  padding: 15px;
+}
+body #highladderMiddle .highladder .highladderHeader h4 {
+  margin: 0;
+}
+body #highladderMiddle .highladder .highladderBody {
+  padding: 15px 0;
+}
+body #highladderMiddle .highladder .highladderBody .tips {
+  width: 100%;
+  background: #eee;
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: #666;
+  padding: 10px 0;
+}
+body #highladderMiddle .highladder .highladderBody .tips ul {
+  list-style: decimal;
+}
+body #highladderMiddle .highladder .highladderBody .tips ul li {
+  margin: 5px 0;
+  line-height: 1.4;
+}
+body #highladderMiddle .highladder .highladderBody .highladderBodyBtn {
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+}
+body #highladderMiddle .highladder .highladderBody .highladderBodyBtn button {
+  background-color: #337ab7;
+  color: #fff;
+  border: none;
+}
+body #highladderMiddle .highladder .highladderBody .highladderBodyBtn button:hover {
+  background: #0070A9;
+}
+body #highladderMiddle .highladder .mypanel {
+  width: 100%;
+  border: 1px solid #ddd;
+  margin: 10px 0;
+}
+body #highladderMiddle .highladder .mypanel .mypanel-title {
+  background: #f0f0f0;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 0;
+  color: #31708F;
+}
+body #highladderMiddle .highladder .mypanel .mypanel-body {
+  width: 100%;
+}
+body #highladderMiddle .highladder .mypanel .mypanel-body .myscore {
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: #999;
+  text-align: center;
+}
+body #highladderMiddle .highladder .mypanel .mypanel-body .myscore span {
+  display: block;
+  padding: 10px 0;
+}
+body #highladderMiddle .highladder .mypanel .mypanel-body .mypanel-body-user {
+  width: 100%;
+  border-bottom: 1px solid #eee;
+}
+body #highladderMiddle .highladder .mypanel .mypanel-body .mypanel-body-user .jiangbei {
+  width: 20px;
+  height: 20px;
+  float: left;
+  margin: 20px 10px 0 10px;
+}
+body #highladderMiddle .highladder .mypanel .mypanel-body .mypanel-body-user .user_detail {
+  float: left;
+  margin-top: 10px;
+}
+body #highladderMiddle .highladder .mypanel .mypanel-body .mypanel-body-user .user_detail .user_img {
+  width: 50px;
+  height: 50px;
+  float: left;
+}
+body #highladderMiddle .highladder .mypanel .mypanel-body .mypanel-body-user .user_detail .user-info {
+  float: left;
+  margin-left: 10px;
+  font-size: 14px;
+  height: 50px;
+  line-height: 25px;
+}
+body #highladderMiddle .highladder .mypanel .mypanel-body .mypanel-body-user .user_detail .user-info div:nth-child(2) {
+  color: #999;
+}
+body #highladderMiddle .highladder .highladderBody-img {
+  float: left;
+  width: 25%;
+}
+body #highladderMiddle .highladder .highladderBody-dec {
+  float: left;
+  width: 75%;
+  padding: 15px;
+  color: #666;
+  letter-spacing: 1px;
+}
+body #highladderMiddle .highladder .highladderBody-dec .guize {
+  line-height: 1.5;
+}
+body .zhezhaoceng {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  display: none;
+}
+body .zhezhaoceng .jindutiao {
+  position: absolute;
+  top: 50%;
+  left: 30%;
+  width: 40%;
+  height: auto;
+  text-align: center;
+}
+body .zhezhaoceng .jindutiao button {
+  border: none;
+}
+body .zhezhaoceng .jindutiao button:hover {
+  color: #fff;
+  background-color: #337ab7;
+}
+body .zhezhaoceng .jindutiao .progress-bar {
+  color: #fff;
+  font-size: 14px;
+}
+.clear {
+  clear: both;
+}

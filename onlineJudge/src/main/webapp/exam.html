@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>exam</title>
+
+    <!-- jquery -->
+    <script type="text/javascript" src="jslib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="jslib/jquery.cookie/jquery.cookie.js"></script>
+    <!-- bootstrap -->
+    <link href="jslib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="jslib/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="style/north.css">
+    <link rel="stylesheet" href="style/exam.css">
+</head>
+<body ng-app="exam" ng-controller="exam">
+    <div ng-include src="'layout/success.html'" id="include" style="width:100%;"></div>
+    <div id="examMiddle">
+        <div id="bread">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="index.html">首页</a>
+                </li>
+                <li>
+                    <a href="userCenter.html">个人中心</a>
+                </li>
+                <li class="active">试卷模式</li>
+            </ol>
+        </div>
+
+        <div class="exam">
+            <div class="col-sm-12">
+                <div class="exam-title">
+                    <h4><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>试卷模式</h4>
+                </div>
+                <div class="exam-body">
+                    <div class="exam-body-img">
+                        <img src="image/target.png">
+                    </div>
+                    <div class="exam-body-des">
+                        <span>
+                            题数：
+                            <label class="radio-inline">
+                              <input type="radio" name="examNum" id="fiveNum" value="5"> 5
+                            </label>
+                            <label class="radio-inline">
+                              <input type="radio" name="examNum" id="tenNum" value="10"> 10
+                            </label>
+                            <label class="radio-inline">
+                              <input type="radio" name="examNum" id="fifteenNum" value="15"> 15
+                            </label>
+                            道编程题
+                        </span>
+                        <span>时间：30 分钟</span>
+                        <span>
+                            难度系数：
+                            <label class="radio-inline">
+                              <input type="radio" name="examDifficulty" id="starone" value="E">
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                            </label>
+                            <label class="radio-inline">
+                              <input type="radio" name="examDifficulty" id="startwo" value="D">
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                            </label>
+                            <label class="radio-inline">
+                              <input type="radio" name="examDifficulty" id="starthree" value="C">
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                            </label>
+                            <label class="radio-inline">
+                              <input type="radio" name="examDifficulty" id="starfour" value="B">
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                            </label>
+                            <label class="radio-inline">
+                              <input type="radio" name="examDifficulty" id="starfive" value="A">
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                            </label>
+                        </span>
+                        <span>规则：系统将自动抽取对应难度、对应题数的编程题，以考试试卷的形式，对用户进行考察</span>
+                    </div>
+                    <p class="clear"></p>
+
+                    <div class="exam-body-warn">
+                        <ul>
+                            <li>本套试卷来源于网上，由注册用户提供，除非经特别声明，不拥有该资料版权，亦不承担任何法律责任。</li>
+                            <li>未经网站或作者的同意不得转载，否则构成侵权，本网站或作者保留诉诸法律的权利。</li>
+                            <li>如发现本网站载有侵犯您著作权的侵权信息，可依法向我们提出权利申请，申请方式点击查看。</li>
+                        </ul>
+                    </div>
+
+                    <div class="exam-bodyBtn">
+                        <button class="btn btn-default" ng-click="exam()">开始作答</button>
+                    </div>
+                </div>
+            </div>
+            <p class="clear"></p>
+        </div>
+</body>
+<script type="text/javascript">
+    var exam = angular.module('exam',[]);
+    exam.controller('exam',function($scope,$compile,$interval,$http){
+        //开始考试模式
+        $scope.exam = function(){
+            var examNum = $('input[name=examNum]:checked').val();
+            var examDifficulty = $('input[name=examDifficulty]:checked').val();
+            if ( typeof examNum =="undefined"|| typeof examDifficulty =="undefined"){
+                alert("请选择题数 以及 题目难度")
+            }else{
+                var text = '<div class="zhezhaoceng"><div class="confirm"><div class="panel panel-primary"><div class="panel-heading">确认信息<button type="button" class="close" aria-label="Close" ng-click="close()"><span aria-hidden="true">&times;</span></button></div><div class="panel-body"><h4>您选择的题数是：'+examNum+'题</h4><h4>您的作答时间是：30分钟</h4><h4>您选择的难度系数是：'+examDifficulty+'星</h4><h4><span class="cd">5</span>s之后跳转答题...</h4></div></div></div></div>';
+                var content = $compile(text)($scope);
+                $scope.interval;
+                $('body').append(content);
+                var cd = 5;
+                $http.post("testpager/get?questionNum="+examNum+"&TimeLimit=30&rank="+examDifficulty).then(function(result){
+                	$scope.result = result;
+                	var a = JSON.stringify(result.data);
+                	sessionStorage.a = a;
+                	sessionStorage.tp = JSON.stringify(result.data.testPager);
+                });
+                 $scope.interval = $interval(function(){
+                     cd = $scope.countdown(cd,examNum)
+                     $('span.cd').html(cd)
+                 },1000)
+            }
+        }
+        
+        //关闭遮罩层
+        $scope.close = function(){
+            $('.zhezhaoceng').remove()
+            $scope.stopInterval();
+        }
+        $scope.stopInterval = function (){
+            if(angular.isDefined($scope.interval)){
+                $interval.cancel($scope.interval);
+                console.log("停止");
+            }
+        }
+        //倒计时
+        $scope.countdown = function(num,examNum){
+            if(num==0){
+                $scope.stopInterval()
+                //跳转考试页面 pass
+                window.location.href="examination.html";
+                sessionStorage.examNum = $scope.result.data.testPager.count;
+                sessionStorage.selectTest = 1;
+            }else{
+                return num-1
+            }
+        }
+    })
+</script>
+</html>

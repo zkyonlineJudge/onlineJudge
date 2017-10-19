@@ -1,0 +1,55 @@
+.resultMiddle {
+  margin: 0 auto;
+  max-width: 960px;
+  padding-top: 50px;
+}
+.resultMiddle ol.breadcrumb {
+  margin: 0;
+}
+.resultMiddle .result {
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 5px;
+  margin-bottom: 50px;
+}
+.resultMiddle .result .result-title {
+  font-size: 14px;
+  letter-spacing: 1.5px;
+  font-weight: bold;
+  padding-left: 5px;
+  border-left: 2px solid #337ab7;
+}
+.resultMiddle .result .result-body {
+  font-size: 14px;
+}
+.resultMiddle .result .result-body td {
+  text-align: center;
+}
+.resultMiddle .result .result-body .page .totaldata {
+  margin-left: 10px;
+  float: left;
+  color: #666;
+}
+.resultMiddle .result .result-body .page nav {
+  float: right;
+  margin-right: 10px;
+}
+.resultMiddle .result .result-body .pagination {
+  margin: 0;
+}
+.resultMiddle .result .result-body .back2pro {
+  padding: 10px 0;
+  margin: 0 auto;
+  display: block;
+  max-width: 960px;
+  text-align: center;
+}
+.accepted {
+  color: #008000;
+}
+.error {
+  color: #ff0000;
+}
+.clear {
+  clear: both;
+}

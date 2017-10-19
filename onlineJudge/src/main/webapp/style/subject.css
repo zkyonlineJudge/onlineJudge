@@ -1,0 +1,107 @@
+body {
+  background-color: #f7f8fa;
+  font-family: "微软雅黑";
+  padding-right: 0 !important;
+  font-size: 16px;
+}
+body #subjectMiddle {
+  max-width: 960px;
+  margin: 0 auto;
+  padding-top: 50px;
+}
+body #subject {
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  width: 100%;
+  padding: 5px;
+}
+body #description .question-content {
+  padding: 10px 0;
+  border-bottom: 1px solid #337ab7;
+  height: 60px;
+}
+body #description .question-content .questionBtn a.back {
+  float: right;
+}
+body #description .question-body-des {
+  font-size: 14px;
+  color: #333;
+  margin: 15px 0;
+  display: block;
+}
+body #description .question-body > p {
+  font-size: 14px;
+  font-weight: bold;
+}
+body #description .table {
+  font-size: 12px;
+}
+body #description .table label {
+  font-weight: normal;
+}
+body #description .table span {
+  float: right;
+}
+body #description .table p {
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+}
+body #hints div {
+  width: 100%;
+  height: auto;
+  text-align: center;
+  margin: 50px 0;
+}
+body #hints div p:nth-child(1) {
+  color: #999999;
+  font-size: 18px;
+}
+body #hints div p:nth-child(2) {
+  color: #777777;
+}
+body #submissions div {
+  width: 100%;
+  height: auto;
+  text-align: center;
+  margin: 50px 0;
+}
+body #submissions div p {
+  color: #777777;
+  font-size: 18px;
+}
+body #discuss {
+  padding: 0;
+  position: relative;
+}
+body #discuss .list-group {
+  position: relative;
+  top: -10px;
+  left: 0;
+  font-size: 14px;
+}
+body #discuss .list-group a:nth-child(1) {
+  border-top: none;
+  border-radius: 0;
+}
+body .response textarea {
+  resize: none;
+  width: 100%;
+  height: auto;
+  min-height: 300px;
+}
+body .response .responseBtns {
+  margin: 15px 0 15px 15px;
+}
+body .response .responseBtns .form-control {
+  display: inline-block;
+  width: auto;
+}
+.clear {
+  clear: both;
+}
+.floatr {
+  float: right;
+}

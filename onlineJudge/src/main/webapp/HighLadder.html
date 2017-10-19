@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>HighLadder</title>
+		<!-- jquery -->
+		<script type="text/javascript" src="jslib/jquery/jquery.min.js"></script>
+		<script type="text/javascript" src="jslib/jquery.cookie/jquery.cookie.js"></script>
+
+		<!-- bootstrap -->
+		<link href="jslib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<script src="jslib/bootstrap/js/bootstrap.min.js"></script>
+		<!--angularjs-->
+		<script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="style/north.css">
+		<link rel="stylesheet" type="text/css" href="style/Highladder.css"/>
+	</head>
+	<script type="text/javascript">
+		var user=$.cookie('user');
+		if(typeof user == 'undefined' || user == "null"){
+			window.location.href="index.html"
+		}else{
+			console.log("已登录")
+		}
+	</script>
+	<body ng-app="highLadder" ng-controller="highLadder">
+		<div ng-include src="'layout/success.html'" id="include" style="width:100%;"></div>
+		<div id="highladderMiddle">
+			<div id="bread">
+				<ol class="breadcrumb">
+					<li>
+						<a href="index.html">首页</a>
+					</li>
+					<li>
+						<a href="userCenter.html">个人中心</a>
+					</li>
+					<li class="active">天梯模式</li>
+				</ol>
+			</div>
+			
+			<div class="highladder">
+				<div class="col-sm-9">
+					<div class="highladderHeader">
+						<h4><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>天梯模式</h4>
+					</div>
+					<div class="highladderBody">
+						<div class="highladderBody-img"><img src="image/target.png"/></div>
+						<div class="highladderBody-dec">
+							<h5>题型：一道编程题</h5>
+							<h5>时间：10分钟</h5>
+							<h5>难度系数：<span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span></h5>
+							<h5 class="guize">规则：用户在规定时间内完成答题并且通过测试案例，则获得天梯分。若未完成或者未通过，则扣除天梯分。天梯分最低为0分</h5>
+						</div>
+						<p class="clear"></p>
+						<div class="tips">
+							<ul>
+								<li>本套试卷来源于网上，由注册用户提供，除非经特别声明，不拥有该资料版权，亦不承担任何法律责任。</li>
+								<li>未经网站或作者的同意不得转载，否则构成侵权，本网站或作者保留诉诸法律的权利。</li>
+								<li>如发现本网站载有侵犯您著作权的侵权信息，可依法向我们提出权利申请，申请方式点击查看。</li>
+							</ul>
+						</div>
+						<div class="highladderBodyBtn">
+							<button class="btn btn-default" ng-click="start()">开始答题</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-3">
+					
+					<div class="mypanel">
+						<div class="mypanel-title">我的天梯</div>
+						<div class="mypanel-body">
+							<div class="myscore">
+								<span id="myscore">score:1000分</span>
+								<span id="myrank">rank:最强王者</span>
+								<span id="myposition">排名:1</span>
+							</div>
+						</div>
+					</div>
+					
+					<div class="mypanel">
+						<div class="mypanel-title">
+							当前排行榜
+						</div>
+						<div class="mypanel-body">
+							
+							<div class="mypanel-body-user" ng-repeat="user in list">
+								<img src="image/jiangbei.jpg" class="jiangbei" />
+									<a href="javascript:void(0)">
+										<div class="user_detail">
+											<img src="image/user_pic.jpg" class="img-circle user_img" />
+											<div class="user-info">
+												<div class="list-name">
+													{{user.username}}
+												</div>
+												<div class="list-score">
+													{{user.score}}
+												</div>
+											</div>
+										</div>
+									</a>
+									<p class="clear"></p>
+							</div>
+							
+							
+							
+						</div>
+					</div>
+				</div>
+				<p class="clear"></p>
+			</div>
+		</div>
+		
+		<div class="zhezhaoceng">
+			
+			<div class="jindutiao">
+				<div class="progress">
+					<div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="min-width:15%;">
+					</div>
+				</div>
+				<button class="btn btn-default" ng-click="concels()">取消</button>
+			</div>
+		</div>
+	</body>
+	<script src="style/js/classie.js"></script>
+	<script type="text/javascript">
+		var highLadder = angular.module('highLadder', []);
+		highLadder.controller('highLadder', function($scope,$interval){
+			
+			$scope.progress=$(".progress-bar");
+			$scope.width=$(".progress-bar").width();
+			$scope.name="方兴宇";
+			var interval;
+			//初始化进度条
+			$scope.initProgress = function (){
+				$scope.progress.width(0);
+				$scope.progress.html("正在生成题目...");
+			}
+			//进度条监听
+			$scope.widthListen = function (obj){
+				interval = $interval(function(){
+					var width=obj.width();
+					var Fwidth = obj.parent().width();
+					if( width == Fwidth ){
+						//pass  前往答题页面
+						$.ajax({
+							url:'highLadder/next/question',
+							method:'POST',
+							success:function(result){
+								sessionStorage.setItem('question',JSON.stringify(result.question));
+								window.location.href='response.html';
+							}
+						})
+					}
+				},1000)
+			}
+			//开始答题事件
+			$scope.start = function(){
+				$(".zhezhaoceng").show();
+				$scope.progress.animate({width:"100%"},3000);
+				$scope.widthListen($scope.progress);
+			}
+			//取消进度条
+			$scope.concels = function (){
+				if(angular.isDefined(interval)){
+					$interval.cancel(interval);
+					console.log("停止");
+					$(".zhezhaoceng").hide();
+					$scope.progress.stop(true)
+					$scope.initProgress()
+					interval=undefined;
+				}
+			}
+			$.post("user/ladder/self",function(data){
+				console.log(data);
+				$("#myscore").html(data.score);
+				if(data.position == -1){
+					$("#myposition").html("该用户还未打天梯");
+				}else{
+					$("#myposition").html(data.position);
+				}
+				if(data.title == null){
+					$("#myrank").html("该用户还未打天梯");
+				}else{
+					$("#myrank").html(data.title);
+				}
+			});
+			$.post("highLadder/nolang/listlimit",{hsize:5},function(data){
+				$scope.list = data.list;
+			});
+			
+			$scope.initProgress();
+		})
+	</script>
+</html>

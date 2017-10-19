@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>discuss</title>
+<!-- jquery -->
+<script type="text/javascript" src="jslib/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="jslib/jquery.cookie/jquery.cookie.js"></script>
+<!-- bootstrap -->
+<link href="jslib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<script src="jslib/bootstrap/js/bootstrap.min.js"></script>
+
+<script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="style/discuss.css">
+<link rel="stylesheet" type="text/css" href="style/north.css">
+</head>
+<body ng-app="discuss" ng-controller="discuss">
+	<div ng-include src="" id="include" style="width:100%;"></div>
+	<div id="middleDiscuss">
+		<div id="bread">
+			<ol class="breadcrumb">
+			  <li><a href="index.html">首页</a></li>
+			  <li class="active">讨论区</li>
+			</ol>
+		</div>
+		<div id="discuss">
+			<table class="table" id="DiscussArea">
+				<thead>
+					<tr>
+						<th>讨论区分区：</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th><span class="label label-danger">hot</span>代码讨论区<span class="badge">42</span></th>
+					</tr>
+					<tr>
+						<th><span class="label label-danger">hot</span>题目讨论区</th>
+					</tr>
+				</tbody>
+			</table>
+			
+			<div id="discussPic">
+				<img src="image/discussPic.png" alt="广告区">
+			</div>
+
+			<div id="discussBlock">
+				<ul class="discussUl">
+					<li onclick="window.location.href='question.html?id=2'">
+						<a href="#" class="head_pic"><img src="image/user_pic.jpg" alt="用户头像"></a>
+						<div class="user_detail">
+							<h4>one plus one<span class="disTop top">置顶</span><span class="label label-danger disTop">hot</span></h4>
+
+							<h4><small><a href="#" class="author">by 方兴宇</a> &nbsp;&nbsp;2017-9-1 &nbsp;&nbsp;发表于<a href="#">题目讨论区</a></small></h4>
+						</div>
+						
+					</li>
+					<li>
+						<a href="#" class="head_pic"><img src="image/user_pic.jpg" alt="用户头像"></a>
+						<div class="user_detail">
+							<h4>one plus one<span class="disTop top">置顶</span><span class="label label-danger disTop">hot</span></h4>
+
+							<h4><small><a href="#" class="author">by 方兴宇</a> &nbsp;&nbsp;2017-9-1 &nbsp;&nbsp;发表于<a href="#">题目讨论区</a></small></h4>
+						</div>
+						
+					</li>
+					<li>
+						<a href="#" class="head_pic"><img src="image/user_pic.jpg" alt="用户头像"></a>
+						<div class="user_detail">
+							<h4>one plus one<span class="disTop top">置顶</span><span class="label label-danger disTop">hot</span></h4>
+
+							<h4><small><a href="#" class="author">by 方兴宇</a> &nbsp;&nbsp;2017-9-1 &nbsp;&nbsp;发表于<a href="#">题目讨论区</a></small></h4>
+						</div>
+						
+					</li>
+					<li>
+						<a href="#" class="head_pic"><img src="image/user_pic.jpg" alt="用户头像"></a>
+						<div class="user_detail">
+							<h4>one plus one<span class="disTop top">置顶</span><span class="label label-danger disTop">hot</span></h4>
+
+							<h4><small><a href="#" class="author">by 方兴宇</a> &nbsp;&nbsp;2017-9-1 &nbsp;&nbsp;发表于<a href="#">题目讨论区</a></small></h4>
+						</div>
+						
+					</li>
+				</ul>
+
+				<nav aria-label="Page navigation">
+				  <ul class="pagination">
+				    <li>
+				      <a href="#" aria-label="Previous">
+				        <span aria-hidden="true">&laquo;</span>
+				      </a>
+				    </li>
+				    <li><a href="#">1</a></li>
+				    <li><a href="#">2</a></li>
+				    <li><a href="#">3</a></li>
+				    <li><a href="#">4</a></li>
+				    <li><a href="#">5</a></li>
+				    <li>
+				      <a href="#" aria-label="Next">
+				        <span aria-hidden="true">&raquo;</span>
+				      </a>
+				    </li>
+				  </ul>
+				</nav>
+			</div>	
+		</div>
+	</div>
+</body>
+<script src="style/js/classie.js"></script>
+<script type="text/javascript">
+	var discuss = angular.module('discuss',[]);
+	discuss.controller('discuss',function($scope){
+		$scope.register = function(){
+			window.open("register.html")
+		}
+	})
+	var user=$.cookie('user');
+	if(typeof user == 'undefined' || user == 'null'){
+		$("#include").attr("src","'layout/north.html'");
+	}else{
+		$("#include").attr("src","'layout/success.html'");
+	}
+</script>
+</html>

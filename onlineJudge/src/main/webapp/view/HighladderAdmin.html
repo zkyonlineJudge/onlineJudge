@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HighladderAdmin</title>
+
+    <!-- jquery -->
+    <script type="text/javascript" src="../jslib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../jslib/jquery.cookie/jquery.cookie.js"></script>
+
+    <!-- bootstrap -->
+    <link href="../jslib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../jslib/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+
+</head>
+<style>
+    .btngroup{
+        margin:10px 0;
+    }
+    td{
+        text-align: center;
+    }
+    .page .totaldata{
+        float:left;
+        color:#666;
+    }
+    .page nav{
+        float: right;
+    }
+    .pagination{
+        margin:0;
+    }
+    .himage{
+        width:50px;
+        height:50px
+    }
+    textarea{resize:none}
+    .clear{clear:both;}
+</style>
+<body ng-app="HighladderAdmin" ng-controller="HighladderAdmin">
+<div class="btn-group col-lg-4 btngroup" role="group" aria-label="...">
+    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#add">添加</button>
+    <button type="button" class="btn btn-default" ng-click="delectArrs()">批量删除</button>
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search for..." ng-model="key">
+        <span class="input-group-btn">
+        <button class="btn btn-default" type="button">Search</button>
+      </span>
+    </div><!-- /input-group -->
+</div>
+<table class="table table-striped">
+    <tr>
+        <td><input type="checkbox" id="selectAll" ng-click="selectAll()"></td>
+        <!--<td>#</td>-->
+        <td>id</td>
+        <td>title</td>
+        <td>minLimit</td>
+        <td>image</td>
+        <td>操作</td>
+    </tr>
+    <tr ng-repeat="highladder in highladders | filter:key" ng-click="select(highladder)">
+        <td><input type="checkbox" data-i ng-click="select(highladder)"></td>
+        <td>{{highladder.id}}</td>
+        <td>{{highladder.title}}</td>
+        <td>{{highladder.minLimit}}</td>
+        <td><image src=../{{highladder.image}} class="himage"></image></td>
+        <td><button class="btn btn-default" ng-click="delete()">删除</button><button class="btn btn-default" ng-click="edit(highladder)">修改</button></td>
+    </tr>
+</table>
+<div class="page">
+    <span class="totaldata">共计10/200条数据</span>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li>
+                <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li>
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <div class="clear"></div>
+</div>
+<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document"><!-- 遮蔽层 -->
+        <div class="modal-content"><!-- 中间的框 -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">添加</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="title" class="col-sm-2 control-label">title</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="title" placeholder="please input title..." required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="image" class="col-sm-2 control-label">image</label>
+                        <div class="col-sm-10">
+                            <input type="file"  id="image" placeholder="please input image...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="minLimit" class="col-sm-2 control-label">minLimit</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="minLimit" placeholder="please input minLimit..." required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    var HighladderAdmin = angular.module('HighladderAdmin',[]);
+    HighladderAdmin.controller('HighladderAdmin',function($scope){
+        $scope.highladders = [{
+            id:1,
+            title:"最强王者",
+            minLimit:50,
+            image:"image/jiangbei.jpg"
+        },{
+            id:2,
+            title:"大师",
+            minLimit:150,
+            image:"image/jiangbei.jpg"
+        },{
+            id:3,
+            title:"钻石",
+            minLimit:250,
+            image:"image/jiangbei.jpg"
+        },{
+            id:4,
+            title:"白银",
+            minLimit:350,
+            image:"image/jiangbei.jpg"
+        },{
+            id:5,
+            title:"青铜",
+            minLimit:450,
+            image:"image/jiangbei.jpg"
+        }]
+        $scope.selectHighladder = [];
+        //删除数组中莫名其妙的$$hashkey
+        $scope.removeHashKey = function  (obj) {
+            return angular.copy(obj)
+        }
+
+        //编辑
+        $scope.edit = function (highladder){
+            highladder = $scope.removeHashKey(highladder)
+            $("#add").modal('show')
+            for (var key in highladder){
+                var obj = $("#"+key);
+                if(obj.attr('type') == "file"){
+                    continue;
+                }else{
+                    if(obj.length == 0){
+                        continue;
+                    }else{
+                        obj.val(highladder[key]);
+                    }
+                }
+            }
+        }
+
+        //删除按钮
+        $scope.delete = function (){
+            var et = event.target;
+            while(et.nodeName != 'TR'){
+                et = $(et).parent()[0];
+            }
+            //pass
+            console.log(et,"已删除")
+        }
+        //批量删除
+        $scope.delectArrs = function (){
+            if ($scope.selectHighladder.length == 0){
+                console.info("没有选择element")
+            }else{
+                console.log("执行删除")
+            }
+
+        }
+
+        //全选
+        $scope.selectAll = function (){
+            var $a=$(":checkbox[data-i]");
+            if($(this).prop("checked")){//取消全选
+                $(this).removeProp("checked");
+                $scope.selectHighladder =[];
+                var index=0;
+                $a.each(function(index){
+                    if ($(this).prop("checked")) {//假如已经选中
+                        $(this).removeProp("checked")
+                    }
+                })
+            }else{//全选
+                $(this).prop("checked",true);
+                $scope.selectHighladder = $.map($scope.highladders,function (n) {
+                    return n;
+                });
+                var index=0;
+                $a.each(function(index){
+                    if (!$(this).prop("checked")) {//假如未被选中
+                        $(this).prop("checked",true)
+                    }
+                })
+            }
+            console.info($scope.selectHighladder)
+        }
+        //单选
+        $scope.select = function (highladder){
+            var et = event.target;
+            if(et.nodeName!='TR'){
+                et=$(et).parent()[0];
+            }
+            if(et.nodeName == 'TR'){
+                if($(et).find("input").prop("checked")){
+                    $(et).find("input").removeProp("checked");
+                    $scope.selectHighladder.pop(highladder)
+                }else{
+                    $(et).find("input").prop("checked",true);
+                    $scope.selectHighladder.push(highladder)
+                }
+                console.info($scope.selectHighladder)
+            }
+        }
+        $('#add').on('hidden.bs.modal', function (e) {
+            $(".form-group input").val("");
+        })
+    })
+</script>
+</html>

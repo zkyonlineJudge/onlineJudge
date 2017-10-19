@@ -1,0 +1,312 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>index</title>
+		<!-- jquery -->
+		<script type="text/javascript" src="jslib/jquery/jquery.min.js"></script>
+		<script type="text/javascript" src="jslib/jquery.cookie/jquery.cookie.js"></script>
+		
+		<!-- bootstrap -->
+		<link href="jslib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<script src="jslib/bootstrap/js/bootstrap.min.js"></script>
+
+		<script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+		
+		
+		<link rel="stylesheet" type="text/css" href="style/index.css">
+		<link rel="stylesheet" type="text/css" href="style/north.css">
+
+	</head>
+	<body ng-app="index" ng-controller="index">
+		<div ng-include src="" id="include" style="width:100%;"></div>
+		<div id="middleIndex">
+			<div id="west">
+				<ul class="nav nav-pills nav-stacked">
+					<li role="presentation">
+						<a href="javascript:void(0)" onclick="document.getElementById('panel_hot').scrollIntoView();" id="hotlink">热门</a>
+					</li>
+					<li role="presentation">
+						<a href="javascript:void(0)" onclick="document.getElementById('panel_java').scrollIntoView();" id="javalink">Java</a>
+					</li>
+					<li role="presentation">
+						<a href="javascript:void(0)" onclick="document.getElementById('panel_c++').scrollIntoView();" id="clink">C++/C</a>
+					</li>
+					<li role="presentation">
+						<a href="javascript:void(0)" onclick="document.getElementById('panel_python').scrollIntoView();" id="pythonlink">python</a>
+					</li>
+				</ul>
+			</div>
+
+			<div id="contentIndex">
+				<ul class="list-group">
+					<li class="list-group-item">
+						<div class="panel panel-default" id="panel_hot" name="panel_hot">
+							<div class="panel-heading">
+								<span class="panel-title">热门</span>
+								<a href="#" class="more">更多热门</a>
+							</div>
+							<div class="panel-body">
+								<div class="list-group">
+									<a href="#" class="list-group-item">
+										<div id="title-row">
+											<h5>LongAdder简单介绍&nbsp;<span class="label label-danger">hot</span></h5>
+										</div>
+										<div id="meta-row">
+											<span>sccc · 5小时前 · Java</span>
+										</div>
+									</a>
+									<a href="#" class="list-group-item">
+										<div id="title-row">
+											<h5>LongAdder简单介绍&nbsp;<span class="label label-danger">hot</span></h5>
+										</div>
+										<div id="meta-row">
+											<span>sccc · 5小时前 · Java</span>
+										</div>
+									</a>
+									<a href="#" class="list-group-item">
+										<div id="title-row">
+											<h5>LongAdder简单介绍&nbsp;<span class="label label-danger">hot</span></h5>
+										</div>
+										<div id="meta-row">
+											<span>sccc · 5小时前 · Java</span>
+										</div>
+									</a>
+									<a href="#" class="list-group-item">
+										<div id="title-row">
+											<h5>LongAdder简单介绍&nbsp;<span class="label label-danger">hot</span></h5>
+										</div>
+										<div id="meta-row">
+											<span>sccc · 5小时前 · Java</span>
+										</div>
+									</a>
+								</div>
+							</div>
+						</div>
+					</li>
+
+					<li class="list-group-item" >
+						<div class="panel panel-default" id="panel_java">
+							<div class="panel-heading">
+								<span class="panel-title">Java</span>
+								<a href="#" class="more">更多</a>
+							</div>
+							<div class="panel-body">
+								<div class="list-group" tags='java'>
+									
+								</div>
+							</div>
+						</div>
+					</li>
+
+					<li class="list-group-item">
+						<div class="panel panel-default" id="panel_c++">
+							<div class="panel-heading">
+								<span class="panel-title">C++/C</span>
+								<a href="#" class="more">更多</a>
+							</div>
+							<div class="panel-body">
+								<div class="list-group" tags='gcc'>
+<!-- 									pass -->
+									
+								</div>
+							</div>
+						</div>
+					</li>
+
+					<li class="list-group-item">
+						<div class="panel panel-default" id="panel_python">
+							<div class="panel-heading">
+								<span class="panel-title">Python</span>
+								<a href="#" class="more">更多</a>
+							</div>
+							<div class="panel-body">
+								<div class="list-group" tags="python">
+									
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+
+			<div id="east">
+				<ul class="list-group">
+					<li class="list-group-item">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<span class="panel-title">排行榜</span>
+								<a href="#" class="more" onclick="window.open('tank.html')">查看全部</a>
+							</div>
+							<div id="rank" class="carousel slide" data-ride="carousel">
+								<div class="carousel-inner" role="listbox">
+									<div class="item active">
+										<div class="panel-body" style="text-align: center">
+											<span>Java</span>
+										</div>
+										<ul tags='java'>
+<!-- 											pass -->
+										</ul>
+									</div>
+									<div class="item">
+										<div class="panel-body" style="text-align: center">
+											<span>Python</span>
+										</div>
+										<ul  tags='python'>
+<!-- 											pass -->
+										</ul>
+									</div>
+									<div class="item">
+										<div class="panel-body" style="text-align: center">
+											<span>C++/C</span>
+										</div>
+										<ul  tags='gcc'>
+<!-- 											pass -->
+										</ul>
+									</div>
+								</div>
+								<ol class="carousel-indicators">
+									<li data-target="#rank" data-slide-to="0" class="active"></li>
+									<li data-target="#rank" data-slide-to="1"></li>
+									<li data-target="#rank" data-slide-to="2"></li>
+								</ol>
+							</div>
+						</div>
+					</li>
+
+					<li class="list-group-item">
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<div id="youcando">
+									<h5>注册我们，你可以</h5>
+									<span>
+									<ul>
+										<li>答题提升自己</li>
+										<li>在天梯系统中笑傲江湖</li>
+										<li>在讨论区和小伙伴们讨论</li>
+									</ul>
+
+									<h5>还不快加入我们!!</h5>
+								</span>
+
+									<div id="registerbtn">
+										<button class="btn btn-default" ng-click="register()">立即注册</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</li>
+
+					<li class="list-group-item">
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<div id="footer">
+									<h5>关注我们</h5>
+									<span><a href="javascript:alert('没有新浪微博')">新浪微博</a>&nbsp;·&nbsp;<a href="javascript:alert('也没有QQ')">QQ</a>&nbsp;·&nbsp;<a href="javascript:alert('别试了，微信也没有')">微信</a></span>
+									<h5>如果你想赞助我们</h5>
+									<span><a href="javascript:alert('省点钱吧')">点这里</a></span>
+									<h5>如果你想加入我们</h5>
+									<span><a href="javascript:alert('0.0')">加入YHW小组</a></span>
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var index = angular.module('index', []);
+		var user=$.cookie('user');
+		if(typeof user == 'undefined' || user == 'null'){
+			$("#include").attr("src","'layout/north.html'");
+		}else{
+			$("#include").attr("src","'layout/success.html'");
+		}
+		
+		index.controller('index', function($scope,$http) {
+			$scope.register = function(){
+				window.open("register.html")
+			}
+			$scope.language={};//储存language-id的键值对 
+			//获取id
+			$http.post("language/list").then(function(result){
+				var result = result.data.list
+				$.each(result,function(item,i){
+					var language=i.language;
+					$scope.language[language]=i.id
+				})
+				//获取公告
+				for(var key in $scope.language){
+					var id = $scope.language[key];
+					$.ajax({
+						url:'post/list?lid='+id,
+						method:'POST',
+						async:false,
+						success:function(e){
+							var length = e.list.length;
+							var text = new Array(length);
+							if(length == 0){
+								text = "<i>暂无数据</i>";
+							}else{
+								$.each(e.list,function(i,item){
+									if(i==0){
+										text[i]='<a href="#" class="list-group-item"><h5>'+item.title+'&nbsp;<span class="label label-danger">hot</span></h5><h6>author:'+item.authorId+'</h6></a>'
+									}else{
+										text[i]+='<a href="#" class="list-group-item"><h5>'+item.title+'&nbsp;<span class="label label-danger">hot</span></h5><h6>author:'+item.authorId+'</h6></a>'
+									}
+								})
+							}
+							try{
+								$('div.list-group[tags='+key+']').prepend(text);
+							}catch(e){
+								console.log(e.name);
+							}
+							
+						}
+					})
+				}
+				//获取排名
+				for (var key in $scope.language){
+					var id =$scope.language[key];
+					$.ajax({
+						url:'highLadder/listlimit',
+						method:'POST',
+						data:{lid:id,hsize:3},
+						async:false,
+						success:function(result){
+							if(result.errorCode==0){
+								var length = result.list.length;
+								var text = new Array(length);
+								$.each(result.list,function(i,item){
+									if(i==0){
+										text[i]='<a href="#"><li><img src="C:\Users\杨威\Desktop\sky.jpg" alt="..." class="img-circle touxiang"><span>'+item.username+' · '+item.score+'分</span></li></a>';
+									}else{
+										text[i]+='<a href="#"><li><img src="C:\Users\杨威\Desktop\sky.jpg" alt="..." class="img-circle touxiang"><span>'+item.username+' · '+item.score+'分</span></li></a>';
+									}
+									
+								});
+								try{
+									$('ul[tags='+key+']').prepend(text);
+								}catch(e){
+									console.log(e.name);
+								}
+							}else{
+								try{
+									$('ul[tags='+key+']').html("毫无数据");
+								}catch(e){
+									console.log(e.name)
+								}
+								
+							}
+							
+						}
+					})
+				}
+			})
+		})
+	</script>
+	<script src="style/js/classie.js"></script>
+
+</html>

@@ -1,0 +1,173 @@
+body{
+    background-color: #f7f8fa;
+    font-family: "微软雅黑";
+    padding-right: 0 !important;
+    font-size: 16px;
+
+    #userCentermiddle{
+        max-width: 960px;
+        margin: 0 auto;
+        padding-top: 50px;
+        #bread{background: transparent;}
+        #profileHeader{
+            width: 100%;
+            background: #fff;
+            box-shadow: 0 1px 3px rgba(0,0,0,.1);
+            border-radius: 5px;
+            position: relative;
+            
+            .user_img{
+                display: inline-block;
+                position: relative;
+                left:50px;
+                bottom: 10px;
+            }
+            .user_des{
+                display: inline-block;
+                position: relative;
+                left:60px;
+                top:45px;
+                
+                >button{
+                    position: relative;
+                    bottom: 36px;
+                    left: 650px;
+                }
+                >button:hover{
+                    background: #337ab7;
+                    color:#fff;
+                }
+            }
+            .user_des p:nth-child(1){
+                font-size: 26px;
+                font-weight: bold;
+            }
+            .user_des p:nth-child(2){
+                color:#9D9D9D;
+                width:600px;
+                overflow: hidden;
+                cursor: pointer;
+            }
+        }
+        .profileBody{
+            #profileHeader;
+            margin-top: 20px;
+            padding-top: 15px;
+            
+            nav.nav>li{
+                margin-left: 15px;
+            }
+            /*nav.nav>li.active{
+                margin-bottom: -2px;
+                border-bottom: 2px solid #337ab7;
+            }*/
+            
+            .list_header{
+                display: inline-block;
+                height:50px;
+                line-height: 50px;
+                margin-left: 15px;
+                color:#0767c8;
+            }
+            .list_item{
+                max-width:100%;
+                border-top: 1px solid #ddd;
+                margin: 0 25px;
+                padding:10px 0;
+                
+                .list_item_meta{
+                    padding:10px 0;
+                    color:#8590a6;
+                    
+                    span:nth-child(2){
+                        .floatr;
+                    }
+                }
+                .list_item_detail{
+                    margin-bottom: 10px;
+                }
+                .contentItem-title span{
+                    color:#9D9D9D;
+                    font-size: 16px;
+                    margin-left:5px;
+                }
+                .contentItem-desc{
+                    margin-top: 5px;
+                    font-size: 15px;                    
+                    span{
+                        display: block;
+                        margin-bottom:10px;
+                    }
+                }
+            }
+        }
+    }
+    
+    .lift{
+        position:fixed;
+        right:350px;
+        bottom: 100px;
+        display: none;
+        
+        ul{
+            list-style: none;
+            margin:0;
+            padding: 0; 
+            
+            li{
+                display: block;
+                margin-top: 10px;
+            }
+            li.btn.btn-info{
+                position: relative;
+            }
+        }
+    }
+    .suggestion{
+        position: absolute;
+        right: 90px;
+        bottom:0px;
+        width: 800px;
+        height:200px;
+        background: #fff;
+        box-shadow: 0 1px 3px #0767c8;
+        border-radius: 5px;
+        z-index: 999;
+        display: none;
+        
+        .suggestion-box{
+            width:800px;
+            height:200px;
+            text-indent: 30px;
+            position: relative;
+        }
+        .tips{
+            position: relative;
+            bottom: 36px;
+            left:600px;
+            color:#ddd;
+        }
+        .suggestbtn{
+            position: relative;
+            bottom: 38px;
+            left:600px;
+        }
+    }
+}
+textarea#description{
+    resize: none;
+    height:200px;
+    position:relative;
+}
+span.desTips{
+    position:relative;
+    color:#ddd;
+    bottom:24px;
+    left:145px;
+}
+.floatr{float:right;}
+.floatl{float:left;}
+a:hover{text-decoration: none !important;}
+a:focus{text-decoration: none !important;}
+h2{margin:0 !important}
+.clear{clear:both}

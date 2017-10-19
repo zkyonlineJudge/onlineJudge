@@ -1,0 +1,312 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>register</title>
+		<!-- jquery -->
+		<script type="text/javascript" src="jslib/jquery/jquery.min.js"></script>
+		<script type="text/javascript" src="jslib/jquery.cookie/jquery.cookie.js"></script>
+		<!-- bootstrap -->
+		<link href="jslib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<script src="jslib/bootstrap/js/bootstrap.min.js"></script>
+
+		<script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="style/register.css"/>
+	</head>
+	
+	<body ng-app="register" ng-controller="register">
+		<div id="middleRegister">
+			<div id="layout_top">
+				<a href="#">
+					<img src="image/baidu.gif" alt="Logo" />
+					<span>在线测评系统</span>
+				</a>
+				<span>已有账号，我要<button class="btn btn-default" type="button" id="loginbtn" data-toggle="modal" data-target="#login">登录</button></span>
+			</div>
+			<div id="bread">
+				<ol class="breadcrumb">
+					<li>
+						<a href="index.html">首页</a>
+					</li>
+					<li class="active">注册页面</li>
+				</ol>
+			</div>
+			<div id="register">
+				<nav>
+					<ul>
+						<li class='on'>第一步:发送验证码</li>
+						<li>第二步：填写验证码</li>
+						<li>第三步：注册成功</li>
+					</ul>
+				</nav>
+
+				<div id="register_content">
+					<form class="form-horizontal" id="register_first">
+						<div class="form-group" id="tips">
+							<span class="col-sm-2"></span>
+							<div class=" col-sm-10">
+								<div class="alert alert-danger" role="alert">邮箱有误或者已经注册过的邮箱<span class="glyphicon glyphicon-remove" aria-hidden="true"></span></div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputEmail" class="col-sm-2 control-label">注册邮箱</label>
+							<div class="col-sm-10">
+								<div class="input-group">
+									<input type="text" ng-model="email" class="form-control" id="inputEmail" placeholder="Email" ng-blur="checkmail($scope.email)" />
+									<div class="input-group-btn">
+										<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-bind="myemail"> <span class="caret"></span></button>
+										<ul class="dropdown-menu dropdown-menu-right">
+											<li>
+												<a href="#" ng-click="changeEmail('@sina.com')">@sina.com</a>
+											</li>
+											<li>
+												<a href="#" ng-click="changeEmail('@yahoo.com')">@yahoo.com</a>
+											</li>
+											<li>
+												<a href="#" ng-click="changeEmail('@outlook.com')">@outlook.com</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPsw" class="col-sm-2 control-label">密码</label>
+							<div class="col-sm-10">
+								<input type="password" ng-model="password" class="form-control" id="inputPsw" placeholder="密码" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputPswagain" class="col-sm-2 control-label">重复密码</label>
+							<div class="col-sm-10">
+								<input type="password" ng-model="repassword" class="form-control" id="inputPswagain" placeholder="重复密码" />
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-12" style="text-align: center;">
+								<button class="btn btn-default" ng-click="submit()">发送验证码</button>
+							</div>
+						</div>
+					</form>
+					<form class="form-horizontal" id="register_two" style="display: none;">
+						<div class="form-group">
+							<label for="inputYanzhengma" class="col-sm-2 control-label">验证码</label>
+							<div class="col-sm-10">
+								<input type="text" ng-model="yanzhengma" class="form-control" id="inputYanzhengma" placeholder="请填写验证码" />
+							</div>
+						</div>
+						<div class="col-sm-12" style="text-align: center;">
+							<button class="btn btn-default" ng-click="next()">下一步</button>
+							<button class="btn btn-default" id="resentBtn" ng-click="resent()">重新发送验证码</button>
+						</div>
+					</form>
+					<form class="form-horizontal" id="register_three" style="display: none;">
+						<h3>恭喜你!注册成功</h3>
+						<h4>请登录个人资料完善个人信息吧</h4>
+						<a href="javascript:void(0)">{{$scope.email+$scope.myemail}}</a>
+					</form>
+				</div>
+			</div>
+		</div>
+		
+		
+		<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">  
+		<div class="modal-dialog" role="document"><!-- 遮蔽层 -->
+		    <div class="modal-content"><!-- 中间的框 -->
+		        <div class="modal-header">  
+		            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		                <span aria-hidden="true">×</span>  
+		            </button>  
+		            <h4 class="modal-title" id="myModalLabel">登录</h4>  
+		        </div>	
+		        <div class="modal-body">  
+		            <form class="form-horizontal" novalidate>
+		            	<div class="form-group">
+							<label for="inputname" class="col-sm-2 control-label">邮箱\手机</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="inputname" placeholder="邮箱\手机" required>
+								<span class="glyphicon glyphicon-remove" id="nameError"></span>
+							</div>
+		            	</div>
+		            	<div class="form-group">
+		            	    <label for="inputPassword" class="col-sm-2 control-label">密码</label>
+		            	    <div class="col-sm-10">
+		            	    	<input type="password" class="form-control" id="inputPassword" placeholder="密码">
+	            	    	</div>
+		            	</div>
+		            	<div class="form-group">
+		            	    <div class="col-sm-offset-2 col-sm-10">
+		            	      <div class="checkbox">
+		            	        <label>
+		            	          	<input type="checkbox" onclick="rememberMe()">记住我的选择
+		            	        </label>
+		            	      </div>
+		            	    </div>
+		            	</div>
+		            	<div class="form-group">
+		            	    <div class="col-sm-offset-2 col-sm-10">
+		            	      <button type="submit" class="btn btn-default" onclick="ajaxsubmit()">登录</button>
+		            	    </div>
+		            	</div>
+		            	<div class="form-group">
+		            		<div class="col-sm-offset-2 col-sm-10" id="lastControls">
+		            			<label class="noName">没有账号？</label><a href="#" class="noName">注册</a>
+		            			<a href="#" class="forgetpsw">忘记密码?</a>
+		            		</div>
+		            	</div>
+		            </form>  
+		        </div>
+		        <div class="modal-footer">
+		            <div class="control-group">
+		            	<div class="controls">
+		            		<label id="loginfromOther">第三方账号登录：</label>
+		            	</div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+	</div>
+	</body>
+	<script type="text/javascript">
+		var register = angular.module('register', []);
+		register.controller('register', function($scope) {
+			$scope.password = ''
+			$scope.yanzhengma = ''
+			$scope.email= ''
+			$scope.myemail='@qq.com'
+			
+			
+			$scope.changeEmail = function(str){
+				$scope.myemail=str;
+			}
+			//第二步提交
+			$scope.next = function() {
+				$.ajax({
+					url:'user/registerv2',
+					method:'post',
+					data:{code:$scope.yanzhengma},
+					success:function(result){
+						if (result.errorCode!=0) {
+							alert("验证码有误 请重新填写");
+						}else{
+
+							$.ajax({
+								url:'user/registerv3',
+								method:'post',
+								data:{pwd:$scope.password},
+								async:false,
+								success:function(result){
+									if (result.errorCode==0) {
+										if(result.email == ($scope.email+$scope.myemail)){
+											console.log("注册成功");
+
+											$("#register_two").css('display', 'none');
+											$("#register_three").css('display', 'block');
+
+											$("#register ul>li:nth-child(2)").removeClass('on');
+											$("#register ul>li:nth-child(3)").addClass('on');
+										}
+									}else{
+										alert("注册失败")
+									}
+								}
+							})
+						}
+					}
+				})
+			}
+			//重新提交按钮
+			$scope.resent = function() {
+				$scope.submit();
+				$("#resentBtn").attr('disabled', 'disabled');
+				$scope.cd(60)
+			}
+			//第一步提交按钮
+			$scope.submit = function() {
+				if($scope.password.length < 6) {
+					alert('密码长度至少6位')
+					return false;
+				}
+				if($scope.password != $scope.repassword) {
+					alert("密码与重复密码不一致")
+					return false;
+				}
+
+				//提交事件
+				var email = $scope.email+$scope.myemail;
+				$.ajax({
+					url:'user/registerv1',
+					method:'post',
+					data:{email:email},
+					success:function(result){
+						if (result.errorCode!=0) {
+							alert('信息有误 请重新提交')
+							return false;
+						}else{
+							$("#register_first").css('display', 'none');
+							$("#register ul>li").removeClass('on');
+							$("#register ul>li:nth-child(2)").addClass('on');
+
+							$("#register_first").css('display', 'none');
+							$("#register_two").css('display', 'block');
+							$("#resentBtn").attr('disabled', 'disabled');
+							$scope.cd(60);
+						}
+					}
+				})
+
+				
+			};
+			//验证码倒计时
+			$scope.cd = function(index) {
+				var html = "重新发送验证码(" + index + 'S' + ")";
+				$('#resentBtn').text(html);
+				var sa = setInterval(function() {
+					index--;
+					var html = "重新发送验证码(" + index + 'S' + ")";
+					$('#resentBtn').text(html);
+					if(index == 0) {
+						clearInterval(sa);
+						$('#resentBtn').removeAttr('disabled');
+						$('#resentBtn').text("重新发送");
+					}
+				}, 1000)
+			}
+		})
+		function ajaxsubmit(){
+		username=$("#inputname").val();
+		password=$("#inputPassword").val();
+		if(username.length==0){
+			alert("请填写用户名");
+			$("#inputname").focus();
+		}else{
+			$.ajax({
+				cache:true,
+				method:"POST",
+				url:"user/login",
+				data:{"username":username,"password":password},
+				success:function(data){
+					 if(data.errorCode!=0){
+					 	alert("账号或密码有误")
+						$("#inputPassword").focus();
+						
+					}else{
+						var user = JSON.stringify(data.user)
+						if(isRemember==true){
+							$.cookie('user',user,{expires:7});//cookies存七天
+							location.reload();
+						}else{
+							$.cookie('user',user);			//cookies仅保存到浏览器关闭
+							location.reload();
+						}
+					}
+				},
+			})
+		}
+	}
+
+	</script>
+
+</html>

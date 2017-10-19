@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>practice</title>
+<!-- jquery -->
+<script type="text/javascript" src="jslib/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="jslib/jquery.cookie/jquery.cookie.js"></script>
+<!-- bootstrap -->
+<link href="jslib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<script src="jslib/bootstrap/js/bootstrap.min.js"></script>
+
+<script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="style/practice.css">
+<link rel="stylesheet" type="text/css" href="style/north.css">
+</head>
+
+<body ng-app="practice" ng-controller="practice">
+	<div ng-include src="" id="include" style="width:100%;"></div>
+	<div id="middlePractice">
+		<div id="bread">
+			<ol class="breadcrumb">
+			  <li><a href="index.html">首页</a></li>
+			  <li class="active">练习模式</li>
+			</ol>
+		</div>
+		<div id="practice">
+			<div id="btnTop">
+				<ul>
+					<li><button class="btn btn-default on">全部题目</button></li>
+					<li><button class="btn btn-default">一星题</button></li>
+					<li><button class="btn btn-default">两星题</button></li>
+					<li><button class="btn btn-default">三星题</button></li>
+					<li><button class="btn btn-default">四星题</button></li>
+					<li><button class="btn btn-default">五星题</button></li>
+				</ul>
+			</div>
+			<div id="practiceTable">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<td>solved</td>
+							<td>#</td>
+							<td>title</td>
+							<td>rank</td>
+							<td>total</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="question in questions" ng-click="goto(question)">
+							<td><span class="glyphicon glyphicon-ok" aria-hidden="true" ng-if="question.sucess==1"></span></td>
+							<td>{{question.id}}</td>
+							<td>{{question.title}}</td>
+							<td ng-switch={{question.rank}}>
+								<div ng-switch-when="1">
+									<span class="glyphicon glyphicon-star" aria-hidden="true">
+								</div>
+								<div ng-switch-when="2">
+									<span class="glyphicon glyphicon-star" aria-hidden="true">
+									<span class="glyphicon glyphicon-star" aria-hidden="true">
+								</div>
+								<div ng-switch-when="3">
+									<span class="glyphicon glyphicon-star" aria-hidden="true">
+									<span class="glyphicon glyphicon-star" aria-hidden="true">
+									<span class="glyphicon glyphicon-star" aria-hidden="true">
+								</div>
+								<div ng-switch-when="4">
+									<span class="glyphicon glyphicon-star" aria-hidden="true">
+									<span class="glyphicon glyphicon-star" aria-hidden="true">
+									<span class="glyphicon glyphicon-star" aria-hidden="true">
+									<span class="glyphicon glyphicon-star" aria-hidden="true">
+								</div>
+								<div ng-switch-when="5">
+									<span class="glyphicon glyphicon-star" aria-hidden="true">
+									<span class="glyphicon glyphicon-star" aria-hidden="true">
+									<span class="glyphicon glyphicon-star" aria-hidden="true">
+									<span class="glyphicon glyphicon-star" aria-hidden="true">
+									<span class="glyphicon glyphicon-star" aria-hidden="true">
+								</div>
+							</td>
+							<td>{{question.total}}</td>
+						</tr>
+					</tbody>
+				</table>
+				<nav aria-label="Page navigation">
+				  <ul class="pagination">
+				    <li ng-click="previous()">
+				      <a href="#" aria-label="Previous">
+				        <span aria-hidden="true">&laquo;</span>
+				      </a>
+				    </li>
+				<li ng-repeat="page in pageList" ng-class="{active:isActivePage(page)}"><a href="#" ng-click="selectPage(page)">{{page}}</a></li>
+<!-- 				    <li><a href="#">1</a></li>
+				    <li><a href="#">2</a></li>
+				    <li><a href="#">3</a></li>
+				    <li><a href="#">4</a></li>
+				    <li><a href="#">5</a></li> -->
+				    <li ng-click="next()">
+				      <a href="#" aria-label="Next">
+				        <span aria-hidden="true">&raquo;</span>
+				      </a>
+				    </li>
+				  </ul>
+				</nav>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	var user=$.cookie('user');
+	if(typeof user == 'undefined' || user == 'null'){
+		$("#include").attr("src","'layout/north.html'");
+	}else{
+		$("#include").attr("src","'layout/success.html'");
+	}
+	var practice = angular.module('practice',[]);
+	practice.controller('practice',function($scope,$http){
+		$http.post("question/nopager/questionlist" ).then(function(result){
+			$scope.pageList=[];//页面显示个数
+			$scope.pages=Math.ceil(result.data.list.length/10);//页面总个数
+			$scope.data=result.data.list;//全部数据
+			$scope.selPage = 1;//当前选择页
+			$scope.questions=$scope.data.slice(0,10);//10为页面显示个数
+	
+			for(var i =0;i<$scope.pages;i++){
+				$scope.pageList.push(i+1);
+			};
+			$scope.isActivePage = function (page) {
+				return $scope.selPage == page;
+			};//将传入的page设为active
+			$scope.selectPage = function (page) {
+				$scope.selPage=page;
+				$scope.isActivePage(page);
+				$scope.updatePage();
+			}//选择当前页面
+			$scope.updatePage = function () {
+				var startPage = 10*($scope.selPage - 1);//起始为（当前页数-1）*页面显示个数
+				var endPage = $scope.selPage*10;//终止为当前页数*页面显示个数
+				$scope.questions=$scope.data.slice(startPage,endPage);
+			}//更新页面显示内容
+			$scope.previous = function () {
+				if($scope.selPage==1){
+					return false;
+				}else{
+					$scope.selectPage($scope.selPage - 1);	
+				}
+			}//上一页
+			$scope.next = function () {
+				if($scope.selPage == $scope.pages){
+					return false;
+				}else{
+					$scope.selectPage($scope.selPage + 1);
+				}
+			}//下一页
+		});
+		$scope.register = function(){
+			window.open("register.html")
+		}
+		$scope.goto = function (question){
+			window.location.href = "subject.html?qid="+question.id;
+		}
+	})
+</script>
+<script src="style/js/classie.js"></script>
+</html>

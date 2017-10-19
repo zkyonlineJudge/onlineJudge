@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>success</title>
+		<!-- jquery -->
+		<!--<script type="text/javascript" src="../jslib/jquery/jquery.min.js"></script>
+		<script type="text/javascript" src="../jslib/jquery.cookie/jquery.cookie.js"></script>-->
+		<!-- bootstrap -->
+		<!--<link href="../jslib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<script src="../jslib/bootstrap/js/bootstrap.min.js"></script>-->
+		<!-- angularjs -->
+		<!--<script src="../jslib/angularjs/src/Angular.js"></script>-->
+		<!--<link rel="stylesheet" type="text/css" href="../style/north.css">-->
+		<!--侧边栏样式-->
+		<link rel="stylesheet" type="text/css" href="style/fonts/font-awesome-4.2.0/css/font-awesome.min.css" />
+		<link rel="stylesheet" type="text/css" href="style/css/menu_sideslide.css" />
+		
+		<!--[if IE]>
+		<script src="style/js/html5.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+		<div id="content">
+			<div id="middle">
+				<!-- LOGO图片 -->
+				<img src="#" alt="Logo" class="img-rounded">
+				<!-- 导航栏 -->
+				<div class="collapse navbar-collapse" id="navigation" role="navigation">
+					<ul class="nav navbar-nav">
+						<li tags="index">
+							<a href="index.html">首页</a>
+						</li>
+						<li tags="practice">
+							<a href="practice.html">练习模式</a>
+						</li>
+						<li tags="tank">
+							<a href="tank.html">排行榜</a>
+						</li>
+						<li tags="discuss">
+							<a href="discuss.html">讨论区</a>
+						</li>
+					</ul>
+				</div>
+				<!-- 搜索框 -->
+				<div id="searchbox">
+					<input type="text" class="form-control" id="search" placeholder="搜索...">
+
+					<div class="panel panel-primary" style="display: none;" id="s-box">
+						<table class="table">
+							<tbody>
+								<tr>
+									<td><small>题目:</small></td>
+								</tr>
+								<tr>
+									<td>123</td>
+								</tr>
+								<tr>
+									<td>123</td>
+								</tr>
+								<tr>
+									<td>123</td>
+								</tr>
+
+								<tr>
+									<td><small>用户:</small></td>
+								</tr>
+								<tr>
+									<td>123</td>
+								</tr>
+								<tr>
+									<td>123</td>
+								</tr>
+								<tr>
+									<td>123</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<a href="javascript:void(0)" id="open-button"><img src="image/user_pic.jpg" class="img-circle user_pic" /></a>
+
+			</div>
+		</div>
+		<div class="menu-wrap">
+
+			<nav class="menu">
+
+				<div class="icon-list">
+
+					<a href="#" onclick="goto('userCenter')"><i class="fa fa-fw fa-star-o"></i><span>个人中心</span></a>
+
+					<a href="#" onclick="goto('HighLadder')"><i class="fa fa-fw fa-envelope-o"></i><span>开始天梯</span></a>
+
+					<a href="#" onclick="goto('exam')"><i class="fa fa-fw fa-comment-o"></i><span>试卷模式</span></a>
+
+					<a href="#" onclick="goto('exit')"><i class="fa fa-fw fa-bar-chart-o"></i><span>退出</span></a>
+
+					<!--<a href="#"><i class="fa fa-fw fa-newspaper-o"></i><span>Reading List</span></a>-->
+
+				</div>
+
+			</nav>
+
+			<button class="close-button" id="close-button">Close Menu</button>
+
+		</div>
+	</body>
+	<script src="style/js/main.js"></script>
+	<script src="style/js/classie.js"></script>
+	<script type="text/javascript">
+		var user = $.cookie('user');
+		try{
+			user = JSON.parse(user);
+		}catch(e){
+		    console.log(e.name)
+		}
+		function goto(str){
+			if(str =="exit"){
+				$.cookie('user',null);
+				window.location.href="index.html"
+			}else{
+				window.location.href=str+".html"
+			}
+		}
+		function load() {
+			var a = $(document).attr("title");
+			switch(a) {
+				case 'index':
+					$("ul.nav li[tags='index']").addClass('active');
+					break;
+				case 'practice':
+					$("ul.nav li[tags='practice']").addClass('active');
+					break;
+				case 'tank':
+					$("ul.nav li[tags='tank']").addClass('active');
+					break;
+				case 'discuss':
+					$("ul.nav li[tags='discuss']").addClass('active');
+					break;
+				default:
+					break;
+			}
+		}
+		$(document).ready(function() {
+			load();
+			$(document).bind('click', function(e) {
+				var e = e || window.event; //浏览器兼容性 
+				var elem = e.target || e.srcElement;
+				while(elem) { //循环判断至跟节点，防止点击的是div子元素 
+					if(elem.id && elem.id == 's-box') {
+						return;
+					}
+					elem = elem.parentNode;
+				}
+				$('#s-box').css('display', 'none'); //点击的不是div或其子元素 
+			});
+			$("#search").bind('input propertychange', function() {
+				$("#s-box").show();
+			});
+		})
+	</script>
+
+
+
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>examination</title>
+
+    <!-- jquery -->
+    <script type="text/javascript" src="jslib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="jslib/jquery.cookie/jquery.cookie.js"></script>
+    <!-- bootstrap -->
+    <link href="jslib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="jslib/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="style/north.css">
+    <link rel="stylesheet" href="style/response.css">
+    <!--codemirror-->
+    <link rel="stylesheet" type="text/css" href="codeMirror/lib/codemirror.css" />
+    <script src="codeMirror/lib/codemirror.js" type="text/javascript" charset="utf-8"></script>
+
+    <!--高亮-->
+    <script src="codeMirror/clike.js" type="text/javascript" charset="utf-8"></script>
+    <script src="codeMirror/python.js" type="text/javascript" charset="utf-8"></script>
+    <!--主题-->
+    <link rel="stylesheet" type="text/css" href="codeMirror/3024-night.css" />
+    <link rel="stylesheet" type="text/css" href="codeMirror/erlang-dark.css" />
+    <link rel="stylesheet" type="text/css" href="codeMirror/tomorrow-night-bright.css" />
+</head>
+<body ng-app="examination" ng-controller="examination">
+    <div ng-include src="'layout/success.html'" id="include" style="width:100%;"></div>
+    <div id="responseMiddle">
+        <!--路径导航-->
+        <div id="bread">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="index.html">首页</a>
+                </li>
+                <li>
+                    <a href="userCenter.html">个人中心</a>
+                </li>
+                <li>
+                    <a href="exam.html">考试模式</a>
+                </li>
+                <li class="active">答题页面</li>
+            </ol>
+        </div>
+
+        <div class="responseProgress">
+            <div class="progress">
+                <div class="progress-bar progress-bar-success progress-bar-striped active " role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="subject">
+            <div class="subject-title">
+                <h4><span class="glyphicon glyphicon-tags" aria-hidden="true"></span>{{testpage.question.title}}</h4>
+            </div>
+            <div class="subject-limit">
+                <span>时间限制：{{testpage.question.timeLimit}}ms</span>
+                <span>空间限制：{{testpage.question.sizeLimit}}K</span>
+            </div>
+            <div class="subject-desc">
+                <span>{{testpage.question.description}}</span>
+            </div>
+
+            <div class="subject-example">
+                <p>输入描述：</p>
+                <span>{{testpage.question.inputDesc}}</span>
+                <p>输出描述：</p>
+                <span>{{testpage.question.outputDesc}}</span>
+                <p>输入案例：</p>
+                <pre>{{testpage.inputExam}}</pre>
+                <p>输出案例：</p>
+                <pre>{{testpage.outputExam}}</pre>
+            </div>
+
+            <div class="mytext">
+                <div class="responseBtns btn-group">
+                    <select class="form-control languageSelect">
+                        <option value="text/x-csrc">C</option>
+                        <option value="text/x-c++src">C++</option>
+                        <option value="text/x-java">Java</option>
+                        <option value="text/x-python">Python</option>
+                    </select>
+
+                    <select class="form-control themeSelect">
+                        <option value="">默认</option>
+                        <option value="3024-night">3024-night</option>
+                        <option value="erlang-dark">erlang-dark</option>
+                        <option value="tomorrow-night-bright">tomorrow-night-bright</option>
+                    </select>
+
+                    <button class="form-control" ng-click="reset()"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>reset</button>
+                    <button class="form-control" ng-click="run()"><span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>run</button>
+                    <button class="form-control" ng-click="last()"><span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>上一题</button>
+                    <button class="form-control" ng-click="next()"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span>下一题</button>
+                </div>
+                <textarea id="mytextarea"></textarea>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script>
+    var examination = angular.module('examination',[]);
+    examination.controller('examination',function($scope,$http){
+    	$scope.init = function (){
+    		$scope.testpage = JSON.parse(sessionStorage.a);
+    		$scope.tp = JSON.parse(sessionStorage.tp);
+    		console.log($scope.testpage,$scope.tp)
+    	}
+    	$scope.init();
+        //重置按钮
+        $scope.reset = function() {
+            var r = confirm("确定重置当前代码吗?");
+            if(r == true) {
+                var mode = $('.languageSelect').val();
+                var map = {
+                    "text/x-csrc": "C",
+                    "text/x-c++src": "C++",
+                    "text/x-java": "Java",
+                    "text/x-python": "Python"
+                }
+                for(var key in map) {
+                    if(key == mode) {
+                        changeHTML(map[key]);
+                    }
+                }
+            } else {
+                return false;
+            }
+        }
+        //上一题
+        $scope.last = function (){
+            if( sessionStorage.selectTest ==  1){
+                alert("这是第一题");
+                return false;
+            }
+            sessionStorage.selectTest = Number(sessionStorage.selectTest) - 1;
+            window.location.reload();
+        }
+        //下一题
+        $scope.next = function (){
+            if( sessionStorage.selectTest ==  sessionStorage.examNum){
+                var r = confirm("已经最后一题 是否交卷");
+                if(r == true){
+                    alert("交卷");
+                }else{
+                    return false;
+                }
+            }
+            $http.post("testpager/next/question?qid="+$scope.testpage.id+"&tpId="+$scope.tp.id).then(function(result){
+            	sessionStorage.a = JSON.stringify(result.data);
+            })
+            sessionStorage.selectTest = Number(sessionStorage.selectTest)+1;
+            window.location.reload(); 
+        }
+        //初始化进度条
+        $scope.initprogress = function (){
+            var obj = $('.progress-bar');
+            var testAll =  sessionStorage.examNum;   //总题数
+            var selectTest =  sessionStorage.selectTest; //当前题数
+            obj.html(selectTest+"/"+testAll);
+            obj.width(obj.parent().width()/testAll*selectTest);
+        }
+        $scope.initprogress();
+        //运行按钮
+        $scope.run = function(){
+            //pass
+            console.log("运行");
+            //接触绑定
+            $(window).unbind('beforeunload');
+        }
+    });
+    $(document).ready(function(){
+        initlocalStorage()
+    })
+    initlocalStorage = function(){
+        changeHTML("C");
+    }
+    var myTextarea = document.getElementById('mytextarea');
+    var CodeMirrorEditor = CodeMirror.fromTextArea(myTextarea, {
+        mode: "text/x-csrc",
+        lineNumbers: true,
+        lineWrapping: true,
+        smartIndent: false,
+    });
+    //改变主题
+    $(".themeSelect").change(function() {
+        var theme = $('.themeSelect').val();
+        CodeMirrorEditor.setOption("theme", theme);
+    })
+    //改变语言
+    $(".languageSelect").change(function() {
+        var mode = $('.languageSelect').val();
+        var map = {
+            "text/x-csrc": "C",
+            "text/x-c++src": "C++",
+            "text/x-java": "Java",
+            "text/x-python": "Python",
+        }
+        for(var key in map) {
+            if(key == mode) {
+                changeHTML(map[key]);
+            }
+        }
+        CodeMirrorEditor.setOption("mode", mode);
+    })
+    //改变html内容
+    changeHTML = function(str) {   //str为语言 例如：C
+        var a = window.localStorage['Median of Two Sorted Arrays' + "1" + str];
+        if(typeof a == "undefined") {
+            var map = {
+                "C": "double "+$scope.testpage.title+"(int* nums1, int nums1Size, int* nums2, int nums2Size) {\n\t\n}",
+                "C++": "class Solution {\npublic:\n\tdouble "+$scope.testpage.title+"(vector<int>& nums1, vector<int>& nums2) {\n\t\t\n\t}\n};",
+                "Java": "class Main {\n\tpublic double "+$scope.testpage.title+"(int[] nums1, int[] nums2) {\n\t\t\n\t}\n}",
+                "Python": "class Solution(object):\n\tdef "+$scope.testpage.title+"(self, nums1, nums2):\n\t\t",
+            }
+            for(var key in map) {
+                if(key == str) {
+                    CodeMirrorEditor.setValue(map[key]);
+                }
+            }
+        } else {
+            CodeMirrorEditor.setValue(a);
+        }
+    }
+</script>
+</html>

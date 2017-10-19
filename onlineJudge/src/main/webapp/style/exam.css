@@ -1,0 +1,83 @@
+body {
+  background-color: #f7f8fa;
+  font-family: "微软雅黑";
+  padding-right: 0 !important;
+  font-size: 16px;
+}
+body #examMiddle {
+  max-width: 960px;
+  margin: 0 auto;
+  padding-top: 50px;
+}
+body #examMiddle .exam {
+  background-color: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+body #examMiddle .exam .exam-title {
+  padding: 5px;
+  border-bottom: 1px solid #ddd;
+}
+body #examMiddle .exam .exam-body {
+  padding-top: 15px;
+}
+body #examMiddle .exam .exam-body-img {
+  float: left;
+}
+body #examMiddle .exam .exam-body-des {
+  float: left;
+  width: 80%;
+  letter-spacing: 1px;
+  color: #999;
+  margin-left: 15px;
+  height: 170px;
+  margin-top: 35px;
+}
+body #examMiddle .exam .exam-body-des > span {
+  display: block;
+}
+body #examMiddle .exam .exam-body-warn {
+  width: 100%;
+  background: #eee;
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: #666;
+  padding: 10px 0;
+}
+body #examMiddle .exam .exam-body-warn ul {
+  list-style: decimal;
+}
+body #examMiddle .exam .exam-body-warn ul li {
+  margin: 5px 0;
+  line-height: 1.4;
+}
+body #examMiddle .exam .exam-bodyBtn {
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+}
+body #examMiddle .exam .exam-bodyBtn button {
+  background-color: #337ab7;
+  color: #fff;
+  border: none;
+}
+body #examMiddle .exam .exam-bodyBtn button:hover {
+  background: #0070A9;
+}
+body .zhezhaoceng {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+body .zhezhaoceng .confirm {
+  margin: 0 auto;
+  max-width: 360px;
+  position: relative;
+  top: 40%;
+}
+.clear {
+  clear: both;
+}

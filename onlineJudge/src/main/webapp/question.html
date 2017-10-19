@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>question</title>
+<!-- jquery -->
+<script type="text/javascript" src="jslib/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="jslib/jquery.cookie/jquery.cookie.js"></script>
+<!-- bootstrap -->
+<link href="jslib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<script src="jslib/bootstrap/js/bootstrap.min.js"></script>
+
+<script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="style/question.css">
+<link rel="stylesheet" type="text/css" href="style/north.css">
+<style>
+	
+</style>
+</head>
+<body ng-app="question" ng-controller="question">
+	<div ng-include src="" id="include" style="width:100%;"></div>
+	<div id="questionMiddle">
+		<div id="bread">
+			<ol class="breadcrumb">
+			  <li><a href="index.html">首页</a></li>
+			  <li><a href="discuss.html">讨论区</a></li>
+			  <li class="active">one plus one</li>
+			</ol>
+		</div>
+		<div id="question">
+			<h3><img src="image/ico-discuss.png" alt="">one plus one</h3>
+			<div class="question_author">
+				<img src="image/user_pic.jpg" alt="">
+				<span><a id="username" href="#">{{question.author.username}}</a></span><br>
+				<span id="uploadTime">编辑与 2017-6-4</span>
+			</div>
+
+			<div class="question_contents">
+				<div class="question_limit">
+					<p >时间限制：<span id="timeLimit">{{question.question.timeLimit}}</span></p>
+					<p >空间限制：<span id="sizeLimit">{{question.question.sizeLimit}}</span></p>
+				</div>
+				<div class="question_problem">
+					<div id="description">
+						<span>{{question.question.description}}</span>
+					</div>
+					<h5>输入描述：</h5>
+					<pre id="inputDesc">{{question.question.inputDesc}}</pre>
+					<h5>输出描述：</h5>
+					<pre id="outputDesc">{{question.question.outputDesc}}</pre>
+					<h5>输入例子：</h5>
+					<pre id="inputExam">{{question.inputExam}}</pre>
+					<h5>输出例子：</h5>
+					<pre id="outputExam">{{question.outputExam}}</pre>
+				</div>
+
+				<div class="question_commtent">
+					<ul id ="qc_ul">
+						<li ng-repeat="comment in comments | filter:{'parentId':'0'}" data-i={{$index+1}} class="laozi">
+							<div class="user">
+								<img src="image/user_pic.jpg" alt=""><br>
+								<h4>{{comment.author}}</h4>
+								<h5>写于{{comment.date}}</h5>
+							</div>
+							<div class="comment">
+								<h6>{{comment.content}}</h6>
+							</div>
+							<div class="comment_commtent">
+								<a class="btn delete">删除</a>
+								<a class="btn response" ng-click="response()">回复</a>
+								<div class="comment_area">
+									<div class="comment_area_comment">
+										<ul>
+											<li>
+												<!--  
+												<img src="image/user_pic.jpg" alt="">
+												<span  class="author"><a href="#">123</a></span>
+												<span>我觉得不行我觉得不行我觉得不行我觉得不行我觉得不行我觉得不行我觉得不行我觉得不行我觉得不行我觉得不行我觉得不行我觉得不行我觉得不行我觉得不行我觉得不行我觉得不行我觉得不行我觉得不行我觉得不行我觉得不行我觉得不行我觉得不行我觉得不行我觉得不行我觉得不行我觉得不行我觉得不行我觉得不行</span>
+												<span><a href="javascript:void(0)" class="btn huifu"  ng-click="huifu()">回复</a><small class="date">2017年10月12日10:24:31</small></span>
+												-->
+											</li>
+											<li>
+												<div contentEditable class="huifuqu" spellcheck="false"></div>
+												<button class="btn btn-default" ng-click="tijiao()">提交</button>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div style="clear:both"></div>
+						</li>
+					</ul>
+					
+					<div id="summernote">
+						<textarea name="" id="submithuifu"rows="10" spellcheck="false"></textarea>
+						<button class="btn btn-default" id="submit" ng-click="submit()">回复</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	//获取url中的参数
+	function getUrlParam(name) {
+	    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+	    var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+	    if (r != null) return unescape(r[2]); return null; //返回参数值
+	}
+	var user=$.cookie('user');
+	if(typeof user == 'undefined' || user == 'null'){
+		$("#include").attr("src","'layout/north.html'");
+	}else{
+		$("#include").attr("src","'layout/success.html'");
+	}
+	var question = angular.module('question',[]);
+	question.controller('question',function($scope,$http,$compile,$timeout){
+		var id = getUrlParam("id");
+		if(typeof user == 'undefined' || user == 'null'){
+			$scope.user = null;
+		}else{
+			$scope.user = JSON.parse(user);
+		}
+		
+		console.log($scope.user);
+		$scope.question="";
+		$scope.comments="";
+	    $http({
+	        method:'POST',
+			url:'comment/question',
+			params:{id:id}
+		}).then(function(result){
+			$scope.question = result.data;
+			$scope.comments = result.data.list;
+		})
+		//注册
+		$scope.register = function(){
+			window.open("register.html")
+		}
+		//打开回复框
+		var FirstOpen = false ;
+		$scope.response = function (){
+			if(!FirstOpen){
+				FirstOpen=!FirstOpen;
+				for(comment of $scope.comments){
+					if(comment.parentId != 0){
+						var node = $('li[data-i='+comment.parentId+'] .comment_area_comment li:eq(1)')
+						var a = '<li><img src="{{imagePath}}" alt="..."><span  class="author"><a href="#">'+comment.author+'：</a></span><span>'+comment.content+'</span><span><a href="javascript:void(0)" class="btn huifu"  ng-click="huifu()">回复</a><small class="date">'+comment.date+'</small></span></li>'
+						node.before($compile(a)($scope))
+					}else{
+						continue
+					}
+				}
+			}
+			var et = event.target;
+			var parentId = $(et).parents("li.laozi").attr("data-i");
+			 $('.huifuqu').attr("pid",parentId);
+			$(et).siblings(".comment_area").slideToggle();
+		}
+		//回复框中的点击回复
+		$scope.huifu = function (){
+			var et = event.target;
+ 			
+			var name = $(et).parent().siblings(".author").children("a").html();
+			var parentId = $(et).parents("li.laozi").attr("data-i");
+			console.log(parentId);
+            $('.huifuqu').html("回复@"+name);
+            $('.huifuqu').attr("pid",parentId);
+		}
+		//点击提交
+		$scope.tijiao = function  (){
+			if($scope.user == null){
+				alert("请先登录");
+				return false;
+			}else{
+				var et = event.target;
+				var content = $(et).siblings(".huifuqu").html();
+				if(content.substring(content.indexOf("：")+1) == "" || content.substring(content.indexOf("：")+1).length < 0){
+				    return;
+				}
+				var pid = $('.huifuqu').attr("pid");
+				if(pid == null){
+					pid = 0;
+				}
+				$.post("comment/commit",{content:content, parentId : pid  , typeId : id , type : 0 },function(data){
+					if(data.errorCode == 0 ){
+						var date = new Date();
+						var a = '<li><img src="image/user_pic.jpg" alt=""><span  class="author"><a href="#">'+$scope.user.username+'：</a></span><span>'+content+'</span><span><a href="javascript:void(0)" class="btn huifu"  ng-click="huifu()">回复</a><small class="date">'+date+'</small></span></li>';
+		            	$(et).parent().before($compile(a)($scope));
+		     			$(et).siblings(".huifuqu").html("");
+					}else{
+						alert("添加评论失败");
+					}
+	            	
+	            });
+			}
+		    
+		}
+		//提交回复
+		$scope.submit = function (){
+			if($scope.user == null){
+				alert("请先登录");
+				return false;
+			}else{
+				var content =$("#submithuifu").val()
+			    var a = '<li><div class="user"><img src="image/user_pic.jpg" alt=""><br><h4>方兴宇</h4><h5>Java:最强王者</h5></div><div class="comment"><h6>'+content+'</h6></div><div class="comment_commtent"><a class="btn delete">删除</a><a class="btn response" ng-click="response()">回复</a><div class="comment_area"><div class="comment_area_comment"><ul><li><div contentEditable class="huifuqu" spellcheck="false"></div><button class="btn btn-default" ng-click="tijiao()">提交</button></li></ul></div></div></div><div style="clear:both"></div></li>'
+	            $.post("/comment/commit",{content:content, parentId : 0 , typeId : id , type : 0 },function(data){
+	            	if(data.errorCode == 0 ){
+	            		var date = new Date();
+						var a = '<li><img src="image/user_pic.jpg" alt=""><span  class="author"><a href="#">'+$scope.user.username+'：</a></span><span>'+content+'</span><span><a href="javascript:void(0)" class="btn huifu"  ng-click="huifu()">回复</a><small class="date">'+date+'</small></span></li>';
+						$('#qc_ul').append($compile(a)($scope));
+			            $("#submithuifu").val("");
+					}else{
+						alert("添加评论失败");
+					}
+	            });
+			}
+		    
+		}
+	})
+</script>
+<script src="style/js/classie.js"></script>
+</html>

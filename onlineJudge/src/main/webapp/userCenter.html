@@ -1,0 +1,334 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>userCenter</title>
+		<!-- jquery -->
+		<script type="text/javascript" src="jslib/jquery/jquery.min.js"></script>
+		<script type="text/javascript" src="jslib/jquery.cookie/jquery.cookie.js"></script>
+		<!-- bootstrap -->
+		<link href="jslib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<script src="jslib/bootstrap/js/bootstrap.min.js"></script>
+
+		<script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+		
+		
+		<link rel="stylesheet" type="text/css" href="style/north.css">
+		<link rel="stylesheet" type="text/css" href="style/usercenter.css"/>
+
+		<!--switch-->
+		<link rel="stylesheet" type="text/css" href="switch/lc_switch.css">
+		<script src="switch/lc_switch.js"></script>
+
+
+	</head>
+	<script type="text/javascript">
+		var user=$.cookie('user');
+		if(typeof user == 'undefined' || user == "null"){
+			window.location.href="index.html"
+		}else{
+			console.log("已登录")
+		}
+	</script>
+	<style type="text/css">
+		html{
+			overflow: scroll !important;
+		}
+		body{
+			overflow: visible !important;
+		}
+	</style>
+	<body ng-app="userCenter" ng-controller="userCenter">
+		<div ng-include src="'layout/success.html'" id="include" style="width:100%;"></div>
+		<div id="userCentermiddle">
+			
+			<!--路径导航-->
+			<div id="bread">
+				<ol class="breadcrumb">
+					<li>
+						<a href="index.html">首页</a>
+					</li>
+					<li class="active">个人中心</li>
+				</ol>
+			</div>
+			<!--主页上方个人信息-->
+			<div id="profileHeader">
+				<div class="user_img">
+					<img src="image/user_pic.jpg" class="img-rounded" />
+				</div>
+				<div class="user_des">
+					<p>{{user.username}}</p>
+					<p ng-bind='showDes(user.description)'></p>
+				</div>
+			</div>
+			<!--主页下方动态-->
+			<div class="profileBody">
+				<!--个人动态导航-->
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active">
+						<a href="#profilecontent" aria-controls="profilecontent" role="tab" data-toggle="tab">动态</a>
+					</li>
+					<li role="presentation">
+						<a href="#abcv" aria-controls="abcv" role="tab" data-toggle="tab">答题</a>
+					</li>
+					<li role="presentation">
+						<a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">答题</a>
+					</li>
+					<li role="presentation">
+						<a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">设置</a>
+					</li>
+					<li role="presentation">
+						<a href="background.html"  role="tab" ng-if="user.authId == 0">进入后台</a>
+					</li>
+				</ul>
+				<!--个人动态-->
+				<div class="tab-content">
+					<div role="tabpanel" id="profilecontent" class="active tab-pane profilecontent">
+						<div class="list_header">
+							<span>我的动态</span>
+						</div>
+						<div>
+							<div class="list_item" >
+								<div class="list_item_meta">
+									<span>回答了题目</span>
+									<span class="date">一个月前</span>
+								</div>
+								<div class="list_item_content">
+									<h2 class="contentItem-title"><a href="">one plus one</a><span class="contentItem-rank">rank:</span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span class="glyphicon glyphicon-star" aria-hidden="true"></span></h2>
+									<div class="contentItem-detail">
+										<div class="contentItem-desc">
+											<span  ng-bind="showDes(questionDes)"></span>
+											<span>实例输入：<code>1+1=3</code></span>
+											<span>实例输出：<code>1+1=3</code></span>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+						</div>
+					</div>
+					<div role="tabpanel" id="abcv" class="tab-pane">123</div>
+					<div role="tabpanel" id="settings" class="tab-pane">
+						<div class="list_header">
+							<span>我的设置</span>
+						</div>
+						<div>
+							<div class="list_item">
+								<div class="list_item_meta">
+									<span>隐私设置</span>
+								</div>
+								<div class="list_item_content">
+									<label for="isIgnore">是否隐藏自己动态</label>
+									<input type="checkbox" id="isIgnore" class="isIgnore" autocomplete="off" />
+								</div>
+							</div>
+							<div class="list_item">
+								<div class="list_item_meta">
+									<span>个人资料修改</span>
+								</div>
+								<div class="list_item_content">
+									<form action="">
+										<div class="list_item_detail">
+											<label for="username" class="col-sm-3">用户名</label>
+											<div class="col-sm-3">
+												<input type="text" id="username" class="form-control" ng-model="user.username">
+											</div>
+											<div class="clear"></div>
+										</div>
+										<div class="list_item_detail">
+											<label for="username" class="col-sm-3">rank</label>
+											<div class="col-sm-3">
+												<input type="text" id="rank" class="form-control" ng-model="user.rank" disabled>
+											</div>
+											<div class="clear"></div>
+										</div>
+										<div class="list_item_detail">
+											<label for="highLadderId" class="col-sm-3">highLadderId</label>
+											<div class="col-sm-3">
+												<input type="text" id="highLadderId" class="form-control" ng-model="user.highLadderId" disabled>
+											</div>
+											<div class="clear"></div>
+										</div>
+										<div class="list_item_detail">
+											<label for="email" class="col-sm-3">email</label>
+											<div class="col-sm-3">
+												<input type="text" id="email" class="form-control" ng-model="user.email" disabled>
+											</div>
+											<div class="clear"></div>
+										</div>
+										<div class="list_item_detail">
+											<label for="phone" class="col-sm-3">phone</label>
+											<div class="col-sm-3">
+												<input type="text" id="phone" class="form-control" ng-model="user.phone">
+											</div>
+											<div class="clear"></div>
+										</div>
+										<div class="list_item_detail">
+											<label for="description" class="col-sm-3">description</label>
+											<div class="col-sm-3">
+												<textarea class="form-control" id="description" ng-model="user.description" ng-change="zishufun()"></textarea>
+												<span class="desTips">150字</span>
+											</div>
+											<div class="clear"></div>
+										</div>
+										<div class="list_item_detail">
+											<button id="saveUser" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>保存</button>
+											<button class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>取消</button>
+										</div>
+									</form>
+									<div class="clear"></div>
+								</div>
+							</div>
+							<div class="list_item">
+								<div class="list_item_meta">
+									<span>密码设置</span>
+								</div>
+								<div class="list_item_content">
+									<form action="">
+										<div class="list_item_detail">
+											<label for="oldpsw" class="col-md-3">旧密码</label>
+											<div class="col-md-3">
+												<input type="password" id="oldpsw" class="form-control">
+											</div>
+											<div class="clear"></div>
+										</div>
+
+										<div class="list_item_detail">
+											<label for="newpsw" class="col-md-3">新密码</label>
+											<div class="col-md-3">
+												<input type="password" id="newpsw" class="form-control">
+											</div>
+											<div class="clear"></div>
+										</div>
+
+										<div class="list_item_detail">
+											<label for="renewpsw" class="col-md-3">重复新密码</label>
+											<div class="col-md-3">
+												<input type="password" id="renewpsw" class="form-control">
+											</div>
+											<div class="clear"></div>
+										</div>
+										<div class="list_item_detail">
+											<button id="savePwd" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>保存</button>
+											<button class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>取消</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--电梯效果-->
+		<div class="lift">
+			<ul>
+				<a href="javascript:void(0)" ng-click="toTop()"><li class="btn btn-default">返回顶部</li></a>
+				<a href="javascript:void(0)" onclick="$('.suggestion').fadeToggle()"><li class="btn btn-info">意见反馈</li></a>
+				<div class="suggestion">
+					<div contenteditable class="suggestion-box">
+					</div>
+					<button class="btn btn-default suggestbtn">提交</button>
+					<span class="tips"></span>
+				</div>
+			</ul>
+		</div>
+	</body>
+	<script src="style/js/classie.js"></script>
+	<script type="text/javascript">
+
+		$(document).ready(function () {
+            $('input.isIgnore').lc_switch();
+        })
+		var userCenter = angular.module('userCenter', []);
+		userCenter.controller('userCenter', function($scope,$http){
+			// /user/dynamic/self
+			$http.post("user/dynamic/self?type=1").then(function(result){
+				$scope.hot = result.data.list;
+// 				console.log(result.data.list);
+			});
+			$http.post("user/dynamic/self?type=2").then(function(result){
+				$scope.q = result.data.list;
+// 				console.log(result.data.list);
+			});
+			$http.post("user/dynamic/self?type=3").then(function(result){
+				$scope.c = result.data.list;
+// 				console.log(result.data.list);
+			});
+			$scope.questionDes="你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你你";
+			$scope.length=200;
+			try{
+                $scope.user = JSON.parse(user);
+			}catch (e){
+			    console.log(e.name);
+			}
+			console.log($scope.user)
+			//编辑资料下的字数显示
+			$scope.zishufun = function(){
+				$scope.zishu=$scope.user.description.length+"/"+$scope.length;
+			}
+			//建议下的字数显示
+			$('.suggestion-box')[0].addEventListener("input",function(){
+				var length=$('.suggestion-box').html().length;
+				$('.tips').html("剩余输入"+($scope.length-length)+"字");
+			})
+			//des太长，多余的地方用。。。表示
+			$scope.showDes=function(str){
+				var length=30;//显然长度为30
+				if(str.length>length){
+					return str.substring(0,length)+"..."
+				}else{
+					return str;
+				}
+			}
+			//返回顶端
+			$scope.toTop = function(){
+				$(document).scrollTop(0);
+			}
+			//滚轮监听
+			$(document).scroll(function(){
+				var top=$(document).scrollTop();
+				while(top>250){
+					$('.lift').fadeIn();break;
+				}
+				if(top<250){
+					$('.lift').fadeOut();
+				}
+			})
+			$("#saveUser").click(function(){
+				var username = $("#username").val();
+				var description = $("#description").val();
+				var phone = $("#phone").val();
+				var email = $("#email").val();
+				$.post("user/update",
+						{"email":email,"username":username,"description":description, "phone":phone}
+						,function(data){
+					if(data.errorCode == 0){
+						alert("保存成功！");
+					}else{
+						alert("数据有误，保存失败");
+					}
+				});
+			});
+		       $("#savePwd").click(function(){
+				var newpsw = $("#newpsw").val();
+				var oldpsw = $("#oldpsw").val();
+				var renewpsw = $("#renewpsw").val();
+				if(newpsw==renewpsw){
+					$.post("user/pwd/modify",
+							{"pwd":oldpsw,"npwd":newpsw}
+							,function(data){
+						if(data.errorCode == 0){
+							alert("保存成功！");
+						}else{
+							alert("密码错误，保存失败");
+						}
+					});
+				}else{
+					alert("新密码2次输入不相同");
+				}	
+			}); 
+		});
+	</script>
+</html>

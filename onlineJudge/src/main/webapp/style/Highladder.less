@@ -1,0 +1,169 @@
+body{
+
+    #highladderMiddle{
+        max-width: 960px;
+        margin: 0 auto;
+        padding-top: 50px;
+        
+        
+        .highladder{
+            background: #fff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            
+            .highladderHeader{
+                border-bottom: 1px solid #ddd;
+                padding: 15px;
+                h4{
+                    margin:0;
+                }
+            }
+            .highladderBody{
+                padding: 15px 0;
+                
+                .tips{
+                    width:100%;
+                    background: #eee;
+                    font-size: 14px;
+                    letter-spacing: 1px;
+                    color:#666;
+                    padding: 10px 0;
+                    ul{
+                        list-style: decimal;
+                        li{
+                            margin: 5px 0;
+                            line-height: 1.4;
+                        }
+                    }
+                }
+                
+                .highladderBodyBtn{
+                    width:100%;
+                    text-align: center;
+                    margin-top: 20px;
+                    
+                    button{
+                        background-color:#337ab7;
+                        color:#fff;
+                        border:none;
+                        
+                        &:hover{
+                            background: #0070A9;
+                        }
+                    }
+                }
+            }
+            
+            .mypanel{
+                width:100%;
+                border: 1px solid #ddd;
+                margin:10px 0;
+                
+                .mypanel-title{
+                    background: #f0f0f0;
+                    text-align: center;
+                    font-size: 16px;
+                    font-weight: bold;
+                    padding: 10px 0;
+                    color:#31708F;
+                }
+                .mypanel-body{
+                    width: 100%;
+                    
+                    .myscore{
+                        font-size: 14px;
+                        letter-spacing: 1px;
+                        color:#999;
+                        text-align: center;
+                        span{
+                            display: block;
+                            padding: 10px 0;
+                        }
+                    }
+                    
+                    .mypanel-body-user{
+                        width:100%;
+                        border-bottom: 1px solid #eee;
+                        
+                        .jiangbei{
+                            width:20px;
+                            height:20px;
+                            float:left;
+                            margin: 20px 10px 0 10px;
+                        }
+                        
+                        .user_detail{
+                            float:left;
+                            margin-top:10px;
+                            
+                            .user_img{
+                                width:50px;
+                                height:50px;
+                                float:left;
+                            }
+                            .user-info{
+                                float:left;
+                                margin-left: 10px;
+                                font-size: 14px;
+                                height:50px;
+                                line-height: 25px;
+                                div:nth-child(2){
+                                    color:#999;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .highladderBody-img{
+                float:left;
+                width:25%;
+            }
+            .highladderBody-dec{
+                float:left;
+                width:75%;
+                padding:15px;
+                color:#666;
+                letter-spacing: 1px;
+                
+                .guize{
+                    line-height: 1.5;
+                }
+            }
+        }
+    }
+    
+    .zhezhaoceng{
+        width:100%;
+        height: 100%;
+        background:rgba(0, 0, 0, 0.45);
+        position:absolute;
+        top: 0;
+        left: 0;
+        z-index: 9999;
+        display: none;
+        
+        .jindutiao{
+            position: absolute;
+            top:50%;
+            left:30%;
+            width:40%;
+            height:auto;
+            text-align: center;
+            
+            button{
+                border:none;
+                &:hover{
+                    color:#fff;
+                    background-color: #337ab7;
+                }
+            }
+            
+            .progress-bar{
+                color:#fff;
+                font-size:14px;
+            }
+        }
+    }
+    
+}
+.clear{clear:both}

@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>tank</title>
+<!-- jquery -->
+<script type="text/javascript" src="jslib/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="jslib/jquery.cookie/jquery.cookie.js"></script>
+<!-- bootstrap -->
+<link href="jslib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<script src="jslib/bootstrap/js/bootstrap.min.js"></script>
+
+<script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="style/tank.css">
+<link rel="stylesheet" type="text/css" href="style/north.css">
+</head>
+<body  ng-app="tank" ng-controller="tank">
+	<div ng-include src="" id="include" style="width:100%;"></div>
+	<div id="tankMiddle">
+		<div id="bread">
+			<ol class="breadcrumb">
+			  <li><a href="index.html">首页</a></li>
+			  <li class="active">排行榜</li>
+			</ol>
+		</div>
+
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+		    <h3 class="panel-title">全部排行</h3>
+		  </div>
+		  <div class="panel-body">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>username</th>
+						<th>score</th>
+						<th>天梯级别</th>
+					</tr>
+				</thead>
+				<tbody tags="all">
+					<!-- all排行榜 -->
+					<tr ng-repeat = "item in allrank">
+						<th>{{item.id}}</th>
+						<th>{{item.username}}</th>
+						<th>{{item.score}}</th>
+						<th>{{item.title}}</th>
+					</tr>
+				</tbody>
+			</table>
+		  </div>
+		</div>
+
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+		    <h3 class="panel-title">C语言排行</h3>
+		  </div>
+		  <div class="panel-body">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>username</th>
+						<th>score</th>
+						<th>天梯级别</th>
+					</tr>
+				</thead>
+				<tbody tags="gcc">
+					<!-- c排行榜 -->
+				</tbody>
+			</table>
+		  </div>
+		</div>
+
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+		    <h3 class="panel-title">JAVA排行</h3>
+		  </div>
+		  <div class="panel-body">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>username</th>
+						<th>score</th>
+						<th>天梯级别</th>
+					</tr>
+				</thead>
+				<tbody tags="java">
+					<!-- java排行榜 -->
+				</tbody>
+			</table>
+		  </div>
+		</div>
+
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+		    <h3 class="panel-title">C++排行</h3>
+		  </div>
+		  <div class="panel-body">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>username</th>
+						<th>score</th>
+						<th>天梯级别</th>
+					</tr>
+				</thead>
+				<tbody tags="g++">
+					<!-- c++排行榜 -->
+				</tbody>
+			</table>
+		  </div>
+		</div>
+
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+		    <h3 class="panel-title">Python排行</h3>
+		  </div>
+		  <div class="panel-body">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>username</th>
+						<th>score</th>
+						<th>天梯级别</th>
+					</tr>
+				</thead>
+				<tbody tags="python">
+					<!-- python排行榜 -->
+				</tbody>
+			</table>
+		  </div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	var user=$.cookie('user');
+	if(typeof user == 'undefined' || user == 'null'){
+		$("#include").attr("src","'layout/north.html'");
+	}else{
+		$("#include").attr("src","'layout/success.html'");
+	}
+	var tank = angular.module('tank',[]);
+	tank.controller('tank',function($scope,$http){
+		$http.post("language/list").then(function(result){
+			var result = result.data.list
+			$scope.language={};//储存language-id的键值对 
+			$.each(result,function(item,i){
+				var language=i.language;
+				$scope.language[language]=i.id
+			})
+			//获取排名
+			for (var key in $scope.language){
+				var id =$scope.language[key];
+				$.ajax({
+					url:'highLadder/listlimit',
+					method:'POST',
+					data:{lid:id,hsize:5},
+					async:false,
+					success:function(result){
+						if(result.errorCode == 0){
+							var length = result.list.length;
+							var text = new Array(length);
+							$.each(result.list,function(i,item){
+								if(i == 0){
+									text[i]='<tr><th>'+(i+1)+'</th><th>'+item.username+'</th><th>'+item.score+'</th><th>'+item.title+'</th></tr>';	
+								}else{
+									text[i]+='<tr><th>'+(i+1)+'</th><th>'+item.username+'</th><th>'+item.score+'</th><th>'+item.title+'</th></tr>';
+								}
+								
+							})
+							try{
+								$('tbody[tags='+key+']').prepend(text);
+							}catch(e){
+								console.log(e.name);
+							}
+						}else{
+							try{
+								$('tbody[tags='+key+']').prepend("暂无排行数据");
+							}catch(e){
+								console.log(e.name);
+							}
+							
+						}
+						
+					}
+				})
+			}
+		})
+		//获取全部排行
+		$http({
+			url:"highLadder/nolang/listlimit?hsize=5",
+			method:'get',
+		}).success(function(result){
+			$scope.allrank = result.list;
+		})
+		$scope.register = function(){
+			window.open("register.html")
+		}
+	})
+</script>
+<script src="style/js/classie.js"></script>
+</html>

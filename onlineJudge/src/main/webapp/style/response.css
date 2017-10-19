@@ -1,0 +1,77 @@
+body {
+  background-color: #f7f8fa;
+  font-family: "微软雅黑";
+  padding-right: 0 !important;
+  font-size: 16px;
+}
+body #responseMiddle {
+  max-width: 960px;
+  margin: 0 auto;
+  padding-top: 50px;
+}
+body #responseMiddle .subject {
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+}
+body #responseMiddle .subject .subject-title {
+  border-bottom: 1px solid #ddd;
+}
+body #responseMiddle .subject .subject-title h4 {
+  font-size: 18px;
+  font-weight: bold;
+}
+body #responseMiddle .subject .subject-title h4 span {
+  margin: 0 5px;
+}
+body #responseMiddle .subject .subject-limit {
+  width: 100%;
+  background-color: #ddd;
+  padding: 10px 0;
+}
+body #responseMiddle .subject .subject-limit span {
+  display: block;
+  text-indent: 36px;
+  letter-spacing: 1px;
+}
+body #responseMiddle .subject .subject-desc {
+  width: 100%;
+}
+body #responseMiddle .subject .subject-desc span {
+  display: block;
+  text-indent: 36px;
+  line-height: 1.6;
+  letter-spacing: 1px;
+}
+body #responseMiddle .subject .subject-example {
+  width: 100%;
+  margin-top: 10px;
+}
+body #responseMiddle .subject .subject-example p {
+  font-size: 14px;
+  font-weight: bold;
+}
+body #responseMiddle .subject .subject-example span {
+  display: block;
+  padding: 15px 9.5px;
+  border-left: 2px solid #1abc9c;
+  background-color: #eee;
+  border-radius: 5px;
+}
+body #responseMiddle .subject .mytext {
+  margin: 20px 0;
+}
+body #responseMiddle .subject .mytext .responseBtns {
+  margin: 10px 0;
+}
+body #responseMiddle .subject .mytext .form-control {
+  display: inline-block;
+  width: auto;
+}
+body #responseMiddle .responseProgress {
+  background-color: #fff;
+  padding: 10px 0;
+}
+body #responseMiddle .responseProgress .progress {
+  margin: 0;
+}

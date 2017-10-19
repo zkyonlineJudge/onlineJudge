@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>postadmin</title>
+
+    <!-- jquery -->
+    <script type="text/javascript" src="../jslib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="../jslib/jquery.cookie/jquery.cookie.js"></script>
+
+    <!-- bootstrap -->
+    <link href="../jslib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../jslib/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+</head>
+<style>
+    .btngroup{
+        margin:10px 0;
+    }
+    td{
+        text-align: center;
+    }
+    .page .totaldata{
+        float:left;
+        color:#666;
+    }
+    .page nav{
+        float: right;
+    }
+    .pagination{
+        margin:0;
+    }
+    .clear{clear:both;}
+</style>
+<body ng-app="postadmin" ng-controller="postadmin">
+<div class="btn-group col-lg-4 btngroup" role="group" aria-label="...">
+    <button type="button" class="btn btn-default" data-toggle="modal" ng-click="open('add')">添加</button>
+    <button type="button" class="btn btn-default" ng-click="delectArrs()">批量删除</button>
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search for..." ng-model="key">
+        <span class="input-group-btn">
+        <button class="btn btn-default" type="button">Search</button>
+      </span>
+    </div><!-- /input-group -->
+</div>
+<table class="table table-striped">
+    <tr>
+        <td><input type="checkbox" id="selectAll" ng-click="selectAll()"></td>
+        <td>#</td>
+        <td>id</td>
+        <td>language</td>
+        <td>content</td>
+        <td>title</td>
+        <td>auth</td>
+        <td>date</td>
+        <td>操作</td>
+    </tr>
+    <tr ng-repeat="post in posts | filter:key" ng-click="select(post)">
+        <td><input type="checkbox" data-i ng-click="select(post)"></td>
+        <td ng-bind="$index"></td>
+        <td>{{post.id}}</td>
+        <td>{{post.language}}</td>
+        <td ng-bind="content(post.content)" title={{post.content}}></td>
+        <td>{{post.title}}</td>
+        <td>{{post.auth}}</td>
+        <td>{{post.date}}</td>
+        <td><button class="btn btn-default" ng-click="delete(post)">删除</button><button class="btn btn-default" ng-click="open('edit',post)">修改</button></td>
+    </tr>
+</table>
+<div class="page">
+    <span class="totaldata">共计{{postslength}}条数据</span>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li ng-click="previous()">
+                <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li ng-repeat="page in pageList" ng-class="{active:isActivePage(page)}"><a href="#" ng-click="selectPage(page)">{{page}}</a></li>
+            <li ng-click="next()">
+                <a href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <div class="clear"></div>
+</div>
+<div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document"><!-- 遮蔽层 -->
+        <div class="modal-content"><!-- 中间的框 -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">添加</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" novalidate>
+                    <div class="form-group">
+                        <label for="language" class="col-sm-2 control-label">languageId</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="language">
+                                <option value="Java">Java</option>
+                                <option value="C++">C++</option>
+                                <option value="C">C</option>
+                                <option value="Python">Python</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="content" class="col-sm-2 control-label">content</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" rows="10" id="content" placeholder="please input content..."></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="title" class="col-sm-2 control-label">title</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="title" placeholder="please input title..." required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" ng-if = 'isAdd==true' ng-click='add()'>Add changes</button>
+                <button type="button" class="btn btn-primary" ng-if = 'isAdd==false' ng-click='edit()'>Edit changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    var postadmin = angular.module('postadmin',[]);
+    
+    postadmin.controller('postadmin',function($scope,$http){
+    	$http.post("/onlineJudge/post/all/managelist").then(function(result){
+    		/* $scope.posts =result.data.list; */
+    		$scope.postslength = result.data.list.length;
+    		
+    		
+    		$scope.pageList=[];//页面显示个数
+			$scope.pages=Math.ceil(result.data.list.length/10);//页面总个数
+			$scope.data=result.data.list;//全部数据
+			$scope.selPage = 1;//当前选择页
+			$scope.posts=$scope.data.slice(0,10);//10为页面显示个数
+	
+			for(var i =0;i<$scope.pages;i++){
+				$scope.pageList.push(i+1);
+			};
+			$scope.isActivePage = function (page) {
+				return $scope.selPage == page;
+			};//将传入的page设为active
+			$scope.selectPage = function (page) {
+				$scope.selPage=page;
+				$scope.isActivePage(page);
+				$scope.updatePage();
+			}//选择当前页面
+			$scope.updatePage = function () {
+				var startPage = 10*($scope.selPage - 1);//起始为（当前页数-1）*页面显示个数
+				var endPage = $scope.selPage*10;//终止为当前页数*页面显示个数
+				$scope.posts=$scope.data.slice(startPage,endPage);
+			}//更新页面显示内容
+			$scope.previous = function () {
+				if($scope.selPage==1){
+					return false;
+				}else{
+					$scope.selectPage($scope.selPage - 1);	
+				}
+			}//上一页
+			$scope.next = function () {
+				if($scope.selPage == $scope.pages){
+					return false;
+				}else{
+					$scope.selectPage($scope.selPage + 1);
+				}
+			}//下一页
+    	});
+    	
+    	
+		   	//添加事件
+		   	$scope.add = function(){
+		   		var a = $("#language").val();
+		   		var b = $("#content").val();
+		   		var c = $("#title").val();
+		   		$.ajax({
+		   			url:'../post/save',
+		   			method:"POST",
+		   			data:{content:b,title:c,language:a},
+		   			success:function(result){
+		   				window.location.reload();
+		   			}
+		   			
+		   		})
+		   	}
+		   	//编辑事件
+		   	$scope.edit = function(){
+		   		var id = $scope.id;
+		   		var a = $("#language").val();
+		   		var b = $("#content").val();
+		   		var c = $("#title").val();
+		   		$.ajax({
+		   			url:'../post/update',
+		   			method:"POST",
+		   			data:{content:b,title:c,language:a,id:id},
+		   			success:function(result){
+		   				window.location.reload();
+		   			}
+		   			
+		   		})
+		   	}
+    		//打开模态框
+    		$scope.open = function (str,post) {
+    			if(str == 'add'){
+    				//add方法
+    				$scope.isAdd = true;
+    			}else{
+    				//edit方法
+    				$scope.isAdd = false;
+    				post = $scope.removeHashKey(post);
+    				for (var key in post){
+    	                var obj = $("#"+key);
+    	                if(obj.length == 0){
+    	                    continue;
+    	                }else{
+    	                    obj.val(post[key]);
+    	                }
+    	            }
+    				$scope.id = post.id;
+    			}
+    			$("#add").modal('show');
+    		}
+    	
+    	 	$scope.selectPost = [];
+	        //正文缩减函数
+	        $scope.content = function (str){
+	            var maxlength = 30;
+	            if(str.length>maxlength){
+	                return str.substring(0,maxlength)+"...";
+	            }else{
+	                return str;
+	            }
+	        };
+	        //删除数组中莫名其妙的$$hashkey
+	        $scope.removeHashKey = function  (obj) {
+	            return angular.copy(obj)
+	        };
+	        //删除按钮
+	        $scope.delete = function (post){
+	            var et = event.target;
+	            while(et.nodeName != 'TR'){
+	                et = $(et).parent()[0];
+	            }
+	            //pass
+	            $.ajax({
+	            	method:'POST',
+	            	url:'../post/deletebyid',
+	            	data:{id:post.id},
+	            	success:function(result){
+	            		//pass
+	            		window.location.reload()
+	            	}
+	            })
+            }
+	        //批量删除
+	        $scope.delectArrs = function (){
+	            if ($scope.selectPost.length == 0){
+	                console.info("没有选择element");
+	            }else{
+	                console.log("执行删除")
+	                var ids=[];
+	                $.each($scope.selectPost,function(index,item){
+	                	ids.push(item.id)
+	                })
+	                ids = ids.join(",")
+	                $.ajax({
+	                	method:'POST',
+	                	url:'../post/batchdelete',
+		            	data:{ids:ids},
+		            	success:function(result){
+		            		//pass
+		            		window.location.reload()
+		            	}
+	                })
+	            }
+	        };
+
+	        //全选
+	        $scope.selectAll = function (){
+	            var $a=$(":checkbox[data-i]");
+	            if($(this).prop("checked")){//取消全选
+	                $(this).removeProp("checked");
+	                $scope.selectPost =[];
+	                var index=0;
+	                $a.each(function(index){
+	                    if ($(this).prop("checked")) {//假如已经选中
+	                        $(this).removeProp("checked")
+	                    }
+	                })
+	            }else{//全选
+	                $(this).prop("checked",true);
+	                $scope.selectPost = $.map($scope.posts,function (n) {
+	                    return n;
+	                });
+	                var index=0;
+	                $a.each(function(index){
+	                    if (!$(this).prop("checked")) {//假如未被选中
+	                        $(this).prop("checked",true);
+	                    }
+	                });
+	            }
+	        };
+	        //单选
+	        $scope.select = function (post){
+	            var et = event.target;
+	            if(et.nodeName!='TR'){
+	                et=$(et).parent()[0];
+	            }
+	            if(et.nodeName == 'TR'){
+	                if($(et).find("input").prop("checked")){
+	                    $(et).find("input").removeProp("checked");
+	                    $scope.selectPost.pop(post)
+	                }else{
+	                    $(et).find("input").prop("checked",true);
+	                    $scope.selectPost.push(post);
+	                }
+	            }
+	        }
+       
+        //模态框关闭事件
+        $('#add').on('hidden.bs.modal', function (e) {
+            $(".form-group input,textarea,date").val("");
+        })
+    })
+</script>
+</html>

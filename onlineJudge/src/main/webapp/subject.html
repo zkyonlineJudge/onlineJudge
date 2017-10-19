@@ -1,0 +1,356 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>subject</title>
+		<!-- jquery -->
+		<script type="text/javascript" src="jslib/jquery/jquery.min.js"></script>
+		<script type="text/javascript" src="jslib/jquery.cookie/jquery.cookie.js"></script>
+
+		<!-- bootstrap -->
+		<link href="jslib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<script src="jslib/bootstrap/js/bootstrap.min.js"></script>
+		<!--angularjs-->
+		<script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="style/subject.css" />
+		<link rel="stylesheet" type="text/css" href="style/north.css">
+		<!--codemirror-->
+		<link rel="stylesheet" type="text/css" href="codeMirror/lib/codemirror.css" />
+		<script src="codeMirror/lib/codemirror.js" type="text/javascript" charset="utf-8"></script>
+
+		<!--高亮-->
+		<script src="codeMirror/clike.js" type="text/javascript" charset="utf-8"></script>
+		<script src="codeMirror/python.js" type="text/javascript" charset="utf-8"></script>
+		<!--主题-->
+		<link rel="stylesheet" type="text/css" href="codeMirror/3024-night.css" />
+		<link rel="stylesheet" type="text/css" href="codeMirror/erlang-dark.css" />
+		<link rel="stylesheet" type="text/css" href="codeMirror/tomorrow-night-bright.css" />
+
+	</head>
+
+	<body ng-app="subject" ng-controller="subject">
+		<div ng-include src="" id="include" style="width:100%;"></div>
+		<div id="subjectMiddle">
+			<div id="bread">
+				<ol class="breadcrumb">
+					<li>
+						<a href="index.html">首页</a>
+					</li>
+					<li>
+						<a href="practice.html">练习模式</a>
+					</li>
+					<li class="active">{{question.title}}</li>
+				</ol>
+			</div>
+
+			<div id="subject">
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs" role="tablist">
+					<li role="presentation" class="active">
+						<a href="#description" aria-controls="description" role="tab" data-toggle="tab">题目详情</a>
+					</li>
+					<li role="presentation">
+						<a href="#hints" aria-controls="hints" role="tab" data-toggle="tab">提示</a>
+					</li>
+					<li role="presentation">
+						<a href="#submissions" aria-controls="submissions" role="tab" data-toggle="tab">submissions</a>
+					</li>
+					<li role="presentation">
+						<a href="#discuss" aria-controls="settings" role="tab" data-toggle="tab">discuss</a>
+					</li>
+					<li role="presentation">
+						<a href="#solution" aria-controls="settings" role="tab" data-toggle="tab">solution</a>
+					</li>
+				</ul>
+
+				<div class="tab-content">
+
+					<div role="tabpanel" class="tab-pane active" id="description">
+						<div class="col-md-9">
+							<div class="question-content">
+								<div class="questionBtn">
+									<section>
+										<a href="#" class="btn btn-default discuss" ng-click="discuss()"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>discuss</a>
+										<a href="#" class="btn btn-default back" ng-click="back()"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>back</a>
+									</section>
+								</div>
+							</div>
+
+							<div class="question-body">
+								<span class="question-body-des">{{question.description}}
+								</span>
+								<p>输入描述：</p>
+								<pre>{{question.inputDesc}}</pre>
+								<p>输入描述</p>
+								<pre>{{question.outputDesc}}</pre>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<table class="table-striped table">
+								<tr>
+									<td>
+										<p>limit</p>
+									</td>
+								</tr>
+								<tr>
+									<td><label>difficulty:</label><span class="label label-danger">{{question.rank}}</span></td>
+								</tr>
+								<tr>
+									<td><label for="">Total success:</label><span>{{question.sucess}}</span></td>
+								</tr>
+								<tr>
+									<td><label for="">Total:</label><span>{{question.total}}</span></td>
+								</tr>
+								<tr>
+									<td><label for="">Contributor:</label><span>{{question.source}}</span></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+
+					<p class="clear"></p>
+					<div role="tabpanel" class="tab-pane col-md-12" id="hints">
+						<div>
+							<p>We do not have any hints for this question at the moment.</p>
+							<p>Do you have one or more hints?</p>
+						</div>
+					</div>
+					<p class="clear"></p>
+					<div role="tabpanel" class="tab-pane col-md-12" id="submissions">
+						<div>
+							<p>You have to login to view your submissions.</p>
+						</div>
+					</div>
+					<p class="clear"></p>
+					<div role="tabpanel" class="tab-pane col-md-12" id="discuss">
+						<!-- <div class="list-group">
+							<a href="#" class="list-group-item">Share my O(log(min(m,n)) solution with explanation<span class="label label-default floatr">200</span></a>
+							<a href="#" class="list-group-item">Share my O(log(min(m,n)) solution with explanation<span class="label label-default floatr">333</span></a>
+							<a href="#" class="list-group-item">Share my O(log(min(m,n)) solution with explanation<span class="label label-default floatr">222</span></a>
+							<a href="#" class="list-group-item">Share my O(log(min(m,n)) solution with explanation<span class="label label-default floatr">444</span></a>
+							<a href="#" class="list-group-item">Share my O(log(min(m,n)) solution with explanation<span class="label label-default floatr">212300</span></a>
+							<button class="btn btn-primary floatr">show more</button>
+						</div> -->
+						<div>
+							<p>We do not have any discusses for this question at the moment.</p>
+							<p>Do you have one or more discusses?</p>
+						</div>
+					</div>
+					<p class="clear"></p>
+					<div role="tabpanel" class="tab-pane col-md-12" id="solution">...</div>
+					<p class="clear"></p>
+				</div>
+
+				<div class="response">
+					<div class="responseBtns btn-group">
+						<select class="form-control languageSelect">
+							<option value="text/x-csrc">C</option>
+							<option value="text/x-c++src">C++</option>
+							<option value="text/x-java">Java</option>
+							<option value="text/x-python">Python</option>
+						</select>
+
+						<select class="form-control themeSelect">
+							<option value="">默认</option>
+							<option value="3024-night">3024-night</option>
+							<option value="erlang-dark">erlang-dark</option>
+							<option value="tomorrow-night-bright">tomorrow-night-bright</option>
+						</select>
+
+						<button class="form-control" ng-click="reset()"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>reset</button>
+						<button class="form-control" ng-click="save()"><span class="glyphicon glyphicon-save" aria-hidden="true"></span>save</button>
+						<button class="form-control" ng-click="run()"><span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>run</button>
+					</div>
+					<textarea id="mytext"></textarea>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		//判断登陆
+		var user = $.cookie('user');
+		if(typeof user == 'undefined'  || user == 'null') {
+			$("#include").attr("src", "'layout/north.html'");
+		} else {
+			$("#include").attr("src", "'layout/success.html'");
+		}
+		
+		
+
+		var subject = angular.module('subject', []);
+		subject.controller('subject', function($scope, $http) {
+
+			$scope.back = function() {
+				window.history.back();
+			};
+			$scope.discuss = function() {
+				window.location.href = "discuss.html";
+			};
+	        //获取参数
+	        $scope.GetQueryString = function(name){
+	        	var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+	            var r = window.location.search.substr(1).match(reg);
+	            if(r!=null)return  unescape(r[2]); return null;
+	        }
+	        $scope.init = function(){
+				var qid = $scope.GetQueryString("qid");
+				$.ajax({
+					url:"question/detaillist?qid="+qid,
+					method:'get',
+					success:function(result){
+						$scope.question = result.question;
+					}
+				})
+			}
+			$scope.init()
+			//运行按钮
+			$scope.run = function(){
+				//pass
+				var islogin = $scope.IsLogin();
+				if(!islogin){
+					alert("请先登陆");
+					return false;
+				}else{
+					//pass
+					alert("该功能暂未开放，请不要点击");
+				}
+			}
+			//重置按钮
+			$scope.reset = function() {
+				var islogin = $scope.IsLogin();
+				if(!islogin){
+					alert("请先登陆");
+					return false;
+				}else{
+					//pass
+					var r = confirm("确定重置当前代码吗?");
+					if(r == true) {
+						var mode = $('.languageSelect').val();
+						var map = {
+							"text/x-csrc": "C",
+							"text/x-c++src": "C++",
+							"text/x-java": "Java",
+							"text/x-python": "Python",
+						}
+						for(var key in map) {
+							if(key == mode) {
+								window.localStorage.removeItem('Median of Two Sorted Arrays' + "1" + map[key]);
+								changeHTML(map[key]);
+								
+							}
+						}
+					} else {
+						return;
+					}
+				}
+			};
+			//保存按钮
+			$scope.save = function() {
+				var islogin = $scope.IsLogin();
+				if(!islogin){
+					alert("请先登陆");
+					return false;
+				}else{
+					//pass
+					var value = CodeMirrorEditor.getValue();
+					var language = $('.languageSelect').val();
+					var map = {
+						"text/x-csrc": "C",
+						"text/x-c++src": "C++",
+						"text/x-java": "Java",
+						"text/x-python": "Python",
+					}
+					for(var key in map) {
+						if(key == language) {
+							language = map[key];
+						}
+					}
+					if(!window.localStorage) {
+						alert("浏览器不支持localstorage,请更换浏览器");
+						return false;
+					} else {
+						window.localStorage['Median of Two Sorted Arrays' + "1" + language] = value; //题目名字+用户id+语言 现在暂时为a
+					}
+				}
+			}
+			$scope.IsLogin = function(){
+				var user = $.cookie('user');
+				if(typeof user == 'undefined'){
+					//未登陆
+					return false;
+				}else{
+					//已登录
+					return true;
+				}
+			}
+		})
+
+		$(document).ready(function() {
+			initlocalStorage = function() {
+				var a = window.localStorage['a'];
+				if(typeof a == "undefined") {
+					changeHTML("C");
+				} else {
+					CodeMirrorEditor.setValue(a);
+				}
+			}
+			
+			var myTextarea = document.getElementById('mytext');
+			var CodeMirrorEditor = CodeMirror.fromTextArea(myTextarea, {
+				mode: "text/x-csrc",
+				lineNumbers: true,
+				lineWrapping: true,
+				smartIndent: false,
+			});
+			//改变主题
+			$(".themeSelect").change(function() {
+				var theme = $('.themeSelect').val();
+				CodeMirrorEditor.setOption("theme", theme);
+			})
+			//改变语言
+			$(".languageSelect").change(function() {
+				var mode = $('.languageSelect').val();
+				var map = {
+					"text/x-csrc": "C",
+					"text/x-c++src": "C++",
+					"text/x-java": "Java",
+					"text/x-python": "Python",
+				}
+				for(var key in map) {
+					if(key == mode) {
+						changeHTML(map[key]);
+					}
+				}
+				CodeMirrorEditor.setOption("mode", mode);
+			})
+			//改变html内容
+			changeHTML = function(str) {   //str为语言 例如：C
+				var a = window.localStorage['Median of Two Sorted Arrays' + "1" + str];
+				if(typeof a == "undefined") {
+					var map = {
+						"C": "double findMedianSortedArrays(int* nums1, int nums1Size, int* nums2, int nums2Size) {\n\t\n}",
+						"C++": "class Solution {\npublic:\n\tdouble findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {\n\t\t\n\t}\n};",
+						"Java": "class Solution {\n\tpublic double findMedianSortedArrays(int[] nums1, int[] nums2) {\n\t\t\n\t}\n}",
+						"Python": "class Solution(object):\n\tdef findMedianSortedArrays(self, nums1, nums2):\n\t\t",
+					}
+					for(var key in map) {
+						if(key == str) {
+							CodeMirrorEditor.setValue(map[key]);
+						}
+					}
+				} else {
+					CodeMirrorEditor.setValue(a);
+				}
+	
+			}
+			initlocalStorage();
+		})
+
+		
+
+		
+	</script>
+
+</html>

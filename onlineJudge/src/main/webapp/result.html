@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>result</title>
+
+    <!-- jquery -->
+    <script type="text/javascript" src="jslib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="jslib/jquery.cookie/jquery.cookie.js"></script>
+    <!-- bootstrap -->
+    <link href="jslib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="jslib/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="http://cdn.static.runoob.com/libs/angular.js/1.4.6/angular.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="style/north.css">
+    <link rel="stylesheet" href="style/result.css">
+
+</head>
+<body ng-app="result" ng-controller="result">
+    <div ng-include src="'layout/success.html'" id="include" style="width:100%;"></div>
+    <div class="resultMiddle">
+        <!--路径导航-->
+        <div id="bread">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="index.html">首页</a>
+                </li>
+                <li>
+                    <a href="userCenter.html.html">个人中心</a>
+                </li>
+                <li>
+                    <a href="exam.html">考试模式</a>
+                </li>
+                <li class="active">结果页面</li>
+            </ol>
+        </div>
+
+        <div class="result">
+            <div class="result-title">
+                <h4>本次运行结果</h4>
+            </div>
+            <div class="result-body">
+                <table class="table table-striped">
+                    <tr>
+                        <td>codeId</td>
+                        <td>time</td>
+                        <td>size</td>
+                        <td>result</td>
+                        <td>error</td>
+                    </tr>
+                    <tr ng-class="{{result.result}}">
+                        <td>{{result.codeId}}</td>
+                        <td>{{result.time}}</td>
+                        <td>{{result.size}}</td>
+                        <td>{{result.result}}</td>
+                        <td>{{result.error}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="result-title">
+                <h4>全部结果</h4>
+            </div>
+            <div class="result-body">
+                <table class="table table-striped">
+                    <tr ng-click="sortByTime()">
+                        <td>codeId<span class="caret"></span></td>
+                        <td>time<span class="caret"></span></td>
+                        <td>size<span class="caret"></span></td>
+                        <td>result<span class="caret"></span></td>
+                        <td>error<span class="caret"></span></td>
+                    </tr>
+                    <tr ng-repeat="result in results | orderBy:sort" ng-class="{true:'accepted',false:'error'}[result.result=='Accepeted']">
+                        <td>{{result.codeId}}</td>
+                        <td>{{result.time}}</td>
+                        <td>{{result.size}}</td>
+                        <td>{{result.result}}</td>
+                        <td>{{result.error}}</td>
+                    </tr>
+                </table>
+                <div class="page">
+                    <span class="totaldata">共计10/200条数据</span>
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li>
+                                <a href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li>
+                                <a href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="clear"></div>
+                </div>
+            </div>
+
+            <div class="result-title">
+                <h4>本次提交的代码</h4>
+            </div>
+            <div class="result-body">
+                <pre>
+{{result.code}}
+                </pre>
+                <a href="javascript:void(0)" class="back2pro">back to problem</a>
+                <a href="javascript:void(0)" class="back2pro" ng-click="next()">next problem</a>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    var result =angular.module('result',[]);
+    result.controller('result',function($scope,$timeout,$interval){
+        $scope.results = [{
+            codeId:"1532151",
+            time:"21ms",
+            size:"12kb",
+            result:"Accepeted",
+            error:""
+        },{
+            codeId:"1532151",
+            time:"24ms",
+            size:"12kb",
+            result:"Accepeted",
+            error:""
+        },{
+            codeId:"1532151",
+            time:"54ms",
+            size:"12kb",
+            result:"Accepeted",
+            error:""
+        },{
+            codeId:"1532151",
+            time:"43ms",
+            size:"12kb",
+            result:"Accepeted",
+            error:""
+        },{
+            codeId:"1231231",
+            time:"34ms",
+            size:"12kb",
+            result:"Memory Limit Exceeded",
+            error:"Uncaught TypeError"
+        },{
+            codeId:"1231231",
+            time:"43ms",
+            size:"12kb",
+            result:"Memory Limit Exceeded",
+            error:"Uncaught TypeError"
+        },{
+            codeId:"1231231",
+            time:"44ms",
+            size:"12kb",
+            result:"Memory Limit Exceeded",
+            error:"Uncaught TypeError"
+        },{
+            codeId:"1231231",
+            time:"66ms",
+            size:"12kb",
+            result:"Memory Limit Exceeded",
+            error:"Uncaught TypeError"
+        },{
+            codeId:"1231231",
+            time:"411ms",
+            size:"12kb",
+            result:"Memory Limit Exceeded",
+            error:"Uncaught TypeError"
+        },{
+            codeId:"1231231",
+            time:"434ms",
+            size:"12kb",
+            result:"Memory Limit Exceeded",
+            error:"Uncaught TypeError"
+        }]
+        //排序关键字，默认为codeId
+        $scope.sort = 'codeId'
+        //排序方法
+        $scope.sortByTime = function (obj){
+            var et = event.target || window.target;
+            $scope.sort = $(et)[0].innerText
+        }
+        //获取参数
+        $scope.GetQueryString = function(name){
+        	var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r!=null)return  unescape(r[2]); return null;
+        }
+        $scope.codeid = $scope.GetQueryString("codeid");
+        //获取代码情况
+        $scope.query = function(){
+        	$.ajax({
+        		url:"highLadder/code/query",
+        		data:{codeId:$scope.codeid},
+        		success:function(result){
+        			if(result.status != 0 ){
+                		if(result.status == 1){
+                			$scope.result={"codeId":$scope.codeid,"time":result.time,"size":result.size,"result":$scope.map[result.status],"error":"","code":result.code};
+                		}else{
+                			$scope.result={"codeId":$scope.codeid,"time":"","size":"","result":$scope.map[result.status],"error":result.error,"code":result.code};
+                		}
+                	}else{
+                		$scope.result={"codeId":"","time":"","size":"","result":$scope.map[result.status],"error":""};
+                		$timeout($scope.init(),5000);
+                	}
+        		}
+        		
+        	})
+        }
+        $scope.queryChange = function(){
+        	$.ajax({
+        		url:"highLadder/code/query",
+        		data:{codeId:$scope.codeid},
+        		success:function(result){
+        			if(result.status != null && result.status != 0 ){
+                		if(result.status == 1){
+                			$scope.result={"codeId":$scope.codeid,"time":result.time,"size":result.size,"result":$scope.map[result.status],"error":"","code":result.code};
+                		}else{
+                			$scope.result={"codeId":$scope.codeid,"time":"","size":"","result":$scope.map[result.status],"error":result.error,"code":result.code};
+                		}
+                		
+                		$interval.cancel($scope.t);
+                	}else{
+                		$scope.result={"codeId":"","time":"","size":"","result":$scope.map[result.status],"error":""};
+                	}
+        		}
+        		
+        	})
+        }
+        //下一题
+        $scope.next = function (){
+        	$.ajax({
+				url:'highLadder/next/question',
+				method:'POST',
+				success:function(result){
+					sessionStorage.setItem('question',JSON.stringify(result.question));
+					window.location.href='response.html';
+				}
+			})
+        }
+        $scope.map = {
+       		0:"Waiting",
+       		1:"Accepted",
+       		2:"Time_Limit_Exceeded",
+       		3:"Memory_Limit_Exceeded" ,
+	        4:"Wrong_Answer" ,
+	        5:"Runtime_Error" ,
+	        6:"Output_limit" ,
+	        7:"Compile_Error" ,
+	        8:"Presentation_Error" ,
+	        11:"System_Error"
+        }
+        $scope.initChange = function(){
+        	$scope.t = $interval($scope.queryChange,1000);
+        }
+        $scope.initChange();
+    })
+</script>
+</html>

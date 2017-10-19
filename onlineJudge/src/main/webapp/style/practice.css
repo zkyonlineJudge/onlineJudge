@@ -1,0 +1,49 @@
+body {
+  font-family: "微软雅黑";
+  padding-right: 0 !important;
+  font-size: 16px;
+}
+body #middlePractice {
+  max-width: 960px;
+  margin: 0 auto;
+  padding-top: 65px;
+}
+body #middlePractice ol.breadcrumb {
+  margin: 0;
+  padding: 0;
+  padding-bottom: 10px;
+}
+body #middlePractice #practice {
+  width: 100%;
+  height: auto;
+  background-color: #fff;
+  padding: 5px;
+}
+body #middlePractice #practice ul li {
+  float: left;
+  margin-right: 15px;
+}
+body #middlePractice #practice ul.pagination li {
+  margin-right: 0;
+}
+body #middlePractice #practice tbody tr {
+  cursor: pointer;
+  font-size: 14px;
+  color: #08c;
+}
+body #middlePractice #practice ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+body #middlePractice #practice table {
+  text-align: center;
+}
+span.glyphicon {
+  top: 0px;
+}
+.on {
+  color: #23527c;
+  background: #eee;
+  border-color: #ddd;
+}

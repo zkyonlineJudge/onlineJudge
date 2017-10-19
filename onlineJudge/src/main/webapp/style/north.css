@@ -1,0 +1,92 @@
+body {
+  background-color: #f7f8fa;
+  font-family: "微软雅黑";
+  padding-right: 0 !important;
+  font-size: 16px;
+}
+body #content {
+  width: 100%;
+  height: 55px;
+  background: #fff;
+  border-bottom: 1px solid #0767c8;
+  position: fixed;
+  z-index: 30;
+}
+body #content #middle {
+  max-width: 960px;
+  height: 55px;
+  line-height: 55px;
+  margin: 0 auto;
+}
+body #content #middle .user_pic {
+  float: right;
+  margin-top: 2px;
+  width: 45px;
+  height: 45px;
+}
+body #content #middle > img {
+  width: 55px;
+  height: 55px;
+  float: left;
+}
+body #content #middle #navigation {
+  padding: 0;
+  margin: 0;
+  float: left;
+  margin-top: -1px;
+}
+body #content #middle #navigation li.active a {
+  color: #23527c !important;
+  background-color: #eee;
+}
+body #content #middle #navigation a {
+  height: 55px;
+}
+body #content #middle #searchbox {
+  float: left;
+  width: 300px;
+  margin: 8px 0 0 15px;
+}
+body #content #middle #loginbtn {
+  float: right;
+}
+body #content #middle #s-box {
+  position: relative;
+  margin-top: 8px;
+  z-index: 50;
+}
+body #login {
+  font-size: 14px;
+}
+body #login .form-control {
+  width: 85%;
+  float: left;
+}
+body #login span.glyphicon {
+  float: left;
+  height: 34px;
+  line-height: 34px;
+  padding-left: 10px;
+  color: red;
+  display: none;
+}
+body #login .checkbox {
+  float: left;
+}
+body #login button[type='submit'] {
+  float: left;
+}
+body #login .noName {
+  float: left;
+}
+body #login .forgetpsw {
+  margin-right: 70px;
+  float: right;
+}
+body #login .modal-content {
+  padding: 0px;
+  margin-top: 80px;
+}
+body #login .modal-footer {
+  text-align: left;
+}

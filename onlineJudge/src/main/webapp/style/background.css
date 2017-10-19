@@ -1,0 +1,32 @@
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+body .top-title {
+  position: relative;
+}
+body .top-title > * {
+  float: left;
+}
+body .top-title img {
+  margin-left: 10%;
+  margin-right: 15px;
+}
+body .top-title .topbtn {
+  position: absolute;
+  right: 20px;
+  top: 40px;
+}
+body section .navgation {
+  float: left;
+  width: 200px;
+  height: 600px;
+  padding: 20px 0;
+}
+.clear {
+  clear: both;
+}
+header {
+  position: relative;
+  background-color: #dddddd;
+}
