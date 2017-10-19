@@ -1,0 +1,8 @@
+[ERROR] 2017-09-17 07:05:36,051 [main] org.verwandlung.voj.judger.core.Runner - catching
+java.lang.NullPointerException
+	at org.verwandlung.voj.judger.util.NativeLibraryLoader.loadLibrary(NativeLibraryLoader.java:52) ~[classes/:?]
+	at org.verwandlung.voj.judger.core.Runner.<clinit>(Runner.java:194) [classes/:?]
+[ERROR] 2017-09-17 08:53:43,247 [main] org.verwandlung.voj.judger.core.Runner - catching
+java.lang.NullPointerException
+	at org.verwandlung.voj.judger.util.NativeLibraryLoader.loadLibrary(NativeLibraryLoader.java:52) ~[classes/:?]
+	at org.verwandlung.voj.judger.core.Runner.<clinit>(Runner.java:194) [classes/:?]

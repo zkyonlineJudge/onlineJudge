@@ -1,0 +1,5 @@
+在虚拟机配置rabbitmq环境
+然后在run-code中RunCodeReciever类中配置HOST_NAME地址为rabbitmq地址
+onlinejudge中SendMessageUtil类中配置HOST地址为rabbitmq地址
+RunCodeReciever 的QUEUE_NAME 设置的队列要与与SendMessageUtil的的队列一样
+Constants中配置的workSpace是存储测试用例的地址，要与run-code的测试用例保持一致
